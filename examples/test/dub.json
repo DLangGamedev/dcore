@@ -1,0 +1,24 @@
+{
+    "authors": [
+        "Timur Gafarov"
+    ],
+    "copyright": "Copyright © 2020, Timur Gafarov",
+    "dependencies": {
+        "dcore": {
+            "path": "../.."
+        }
+    },
+    "description": "dcore example",
+    "license": "BSL-1.0",
+    "name": "main",
+    "importPaths": ["src"],
+    "sourcePaths": ["src"],
+    "mainSourceFile": "src/main.d",
+
+    "configurations": [
+        {
+            "name": "application",
+            "targetType": "executable"
+        }
+    ]
+}

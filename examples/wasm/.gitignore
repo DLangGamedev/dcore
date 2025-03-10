@@ -1,0 +1,24 @@
+# Static libraries
+*.a
+*.lib
+
+# Backup files
+*~
+
+# Dub files
+.dub
+dub.selections.json
+
+# Dub test files
+__test__library__
+tests
+
+# Executables
+*.exe
+
+# Debug info
+*.pdb
+
+# Node.js
+node_modules
+dub.selections.json
