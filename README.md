@@ -4,8 +4,8 @@ Low level general-purpose library for [D language](https://dlang.org). Partial s
 
 * `betterC` compliant
 * Independent from Phobos for core functionality. Uses only `betterC` parts of Phobos, like `std.traits` and system APIs
-* Will become a minimal standard library: include standard I/O, math, data manipulation, etc
-* Possible support for bare metal/WebAssembly/ARM
+* Will become a minimal standard library: include standard I/O, math, data manipulation, etc.
+* As much as possible support for bare metal/WebAssembly/ARM
 * Extensive unit testing
 
 Progress
