@@ -1,6 +1,6 @@
 dcore
 =====
-A low level general-purpose library for D language.
+A low level general-purpose library for [D language](https://dlang.org). Partial successor of [dlib 1.x](https://github.com/gecko0307/dlib) and a future base for dlib 2.0.
 
 * `betterC` compliant
 * Independent from Phobos for core functionality. Uses only `betterC` parts of Phobos, like `std.traits` and system APIs
