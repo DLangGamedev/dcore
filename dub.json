@@ -1,6 +1,6 @@
 {
     "name": "dcore",
-    "description": "Low level utility library",
+    "description": "Low level general-purpose library",
     "homepage": "https://github.com/DLangGamedev/dcore",
     "license": "BSL-1.0",
     "authors": [
