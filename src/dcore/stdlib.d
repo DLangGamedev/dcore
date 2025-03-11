@@ -61,26 +61,38 @@ version(FreeStanding)
 {
     extern(C) nothrow @nogc
     {
-        // Fallback
+        // For user-side implementation:
+        __gshared void* function(size_t) custom_malloc;
+        __gshared void function(void* mem) custom_free;
+        __gshared void function(uint seed) custom_srand;
+        __gshared int function() custom_rand;
+        
         void* malloc(size_t size)
         {
-            return null;
+            if (custom_malloc)
+                return custom_malloc(size);
+            else
+                return null;
         }
         
-        // Fallback
         void free(void* mem)
         {
+            if (custom_free)
+                custom_free(mem);
         }
         
-        // Fallback
         void srand(uint seed)
         {
+            if (custom_srand)
+                custom_srand(seed);
         }
         
-        // Fallback
         int rand()
         {
-            return 0;
+            if (custom_rand)
+                return custom_rand();
+            else
+                return 0;
         }
     }
 }
@@ -88,6 +100,7 @@ else
 {
     extern(C) nothrow @nogc
     {
+        // Use C runtime functions
         void* malloc(size_t size);
         void free(void* mem);
         void srand(uint seed);

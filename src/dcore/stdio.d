@@ -33,7 +33,7 @@ version(WebAssembly)
     
     extern(C) nothrow @nogc
     {
-        // Implement these on browser side
+        // Implement these on browser side:
         void jsPrintChar(uint c);
         void jsPrintString(uint str, uint len);
         
@@ -56,136 +56,10 @@ version(WebAssembly)
             return '\n';
         }
         
-        const char[] hexmap = [
-            '0', '1', '2', '3', 
-            '4', '5', '6', '7', 
-            '8', '9', 'A', 'B', 
-            'C', 'D', 'E', 'F'
-        ];
-        
         int printf(const(char)* fmt, ...)
         {
-            /* 
-             * Variadic arguments forwarding is not implemented yet,
-             * so we just print fmt
-             */
+            // Variadic arguments forwarding is not implemented yet, so we just print fmt
             puts(fmt);
-            
-            /*
-            va_list args;
-            va_start(args, fmt);
-            
-            uint f;
-            int pos = 0;
-            while(true)
-            {
-                char c = fmt[pos];
-                pos++;
-                if (c == 0) break;
-                
-                if (c == '%')
-                {
-                    pos++;
-                    c = fmt[pos];
-                    if (c == 0) break;
-                    
-                    switch(c)
-                    {
-                        case 'c': // ASCII character
-                            jsPrintChar(va_arg!char(args));
-                            break;
-                        
-                        case 's': // zero-terminated string
-                            char* strPtr = va_arg!(char*)(args);
-                            for(char n = *strPtr; n != 0; strPtr++)
-                            {
-                                n = *strPtr;
-                                jsPrintChar(n);
-                            }
-                            break;
-                        
-                        case 'x': // 8 digit, unsigned 32bit hex integer
-                            uint u = va_arg!(uint)(args);
-                            jsPrintChar('0');
-                            jsPrintChar('x');
-                            char[8] digits;
-                            for (int j = 7; j >= 0; j--)
-                            {
-                                digits[j] = hexmap[u & 0x0F];
-                                u >>= 4;
-                            }
-                            foreach(char d; digits)
-                                jsPrintChar(d);
-                            break;
-                        
-                        case 'k': // 4 digit, unsigned 16bit hex integer
-                            ushort u = va_arg!ushort(args);
-                            jsPrintChar('0');
-                            jsPrintChar('x');
-                            char[4] digits;
-                            for (int j = 3; j >= 0; j--)
-                            {
-                                digits[j] = hexmap[u & 0x0F];
-                                u >>= 4;
-                            }
-                            foreach(char d; digits)
-                                jsPrintChar(d);
-                            break;
-                        
-                        case 'd': // signed integer
-                            int w = va_arg!int(args);
-                            if (w < 0)
-                            {
-                                f = -w;
-                                jsPrintChar('-');
-                            }
-                            else
-                            {
-                                f = w;
-                            }
-                            goto u2;
-                            break;
-                        
-                        case 'u': // unsigned integer
-                            f = va_arg!uint(args);
-                            u2:
-                            {
-                                char[10] d;
-                                int k = 9;
-                                do
-                                {
-                                    d[k] = (f % 10) + '0';
-                                    f /= 10;
-                                    k--;
-                                }
-                                while(f && k >= 0);
-                                while(++k < 10)
-                                {
-                                    jsPrintChar(d[k]);
-                                }
-                            }
-                            break;
-                        
-                        case 'X': // 2 digit, unsigned 8 bit hex integer
-                            ubyte b = va_arg!(ubyte)(args);
-                            jsPrintChar('0');
-                            jsPrintChar('x');
-                            jsPrintChar(hexmap[(b & 0xF0) >> 4]);
-                            jsPrintChar(hexmap[b & 0x0F]);
-                            break;
-                        
-                        default:
-                            jsPrintChar(c);
-                            break;
-                    }
-                }
-                else
-                    jsPrintChar(c);
-            }
-            
-            va_end(args);
-            */
-            
             return 0;
         }
     }
