@@ -31,4 +31,5 @@ module dcore.math;
 public
 {
     import dcore.math.base;
+    import dcore.math.utils;
 }
