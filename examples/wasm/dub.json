@@ -23,7 +23,9 @@
         },
         {
             "name": "desktop",
-            "targetType": "executable"
+            "targetType": "executable",
+            "dflags": ["-betterC", "-nodefaultlib", "--nogc"],
+            "versions": ["NoPhobos"]
         }
     ]
 }

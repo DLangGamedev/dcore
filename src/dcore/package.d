@@ -30,7 +30,6 @@ module dcore;
 
 public
 {
-    import dcore.internal;
     import dcore.linker;
     import dcore.math;
     import dcore.mutex;
