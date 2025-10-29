@@ -27,6 +27,15 @@ DEALINGS IN THE SOFTWARE.
 */
 module dcore.random;
 
+version(WebAssembly)
+{
+    version = UseFreeStandingRNG;
+}
+else version(FreeStanding)
+{
+    version = UseFreeStandingRNG;
+}
+
 /**
  * Bob Jenkins' 96 bit mix function
  */
@@ -44,22 +53,95 @@ ulong mix(ulong a, ulong b, ulong c) pure nothrow @nogc
     return c;
 }
 
-version(WebAssembly)
+/// Simple 64-bit xorshift PRNG
+struct RNG
 {
-    // Not implemented
-    
-    // Fallback
-    void init() nothrow @nogc
+    ulong state;
+
+    /// Initialize with a seed
+    void init(ulong s) nothrow @nogc
     {
+        state = s;
+        if (state == 0) state = 0xdeadbeefcafebabeUL; // avoid zero seed
+    }
+
+    /// Generate next random 64-bit unsigned integer
+    ulong nextULong() nothrow @nogc
+    {
+        ulong x = state;
+        x ^= x >> 12;
+        x ^= x << 25;
+        x ^= x >> 27;
+        state = x;
+        return x * 0x2545F4914F6CDD1DUL;
+    }
+
+    /// Generate next random integer in [mi, ma)
+    int randomInRange(int mi, int ma) nothrow @nogc
+    {
+        ulong r = nextULong();
+        return mi + cast(int)(r % cast(ulong)(ma - mi));
+    }
+
+    /// Generate next random floating-point number in [0,1)
+    T random(T)() nothrow @nogc
+    {
+        return cast(T)(nextULong() >> 11) / cast(T)(1UL << 53); // 53-bit precision
     }
 }
-else version(FreeStanding)
+
+version(UseFreeStandingRNG)
 {
-    // Not implemented
+    private __gshared RNG rng;
     
-    // Fallback
     void init() nothrow @nogc
     {
+        pragma(inline, true);
+        rng.init(seed());
+    }
+    
+    version(X86_64)
+    {
+        ulong rdtsc() nothrow @nogc
+        {
+            ulong lo, hi;
+            asm nothrow @nogc
+            {
+                rdtsc;
+                mov lo, EAX;
+                mov hi, EDX;
+            }
+            return (hi << 32) | lo;
+        }
+        
+        alias seed = rdtsc;
+    }
+    else
+    {
+        ulong seed() nothrow @nogc
+        {
+            ulong x;
+            ulong y = cast(ulong)cast(byte*)__FUNCTION__;
+            return mix(cast(ulong)&x, y, 0xDEADBEEFDEADBEEFUL);
+        }
+    }
+    
+    void setSeed(ulong s) nothrow @nogc
+    {
+        pragma(inline, true);
+        rng.init(s);
+    }
+
+    int randomInRange(int mi, int ma) nothrow @nogc
+    {
+        pragma(inline, true);
+        return rng.randomInRange(mi, ma);
+    }
+
+    T random(T)() nothrow @nogc
+    {
+        pragma(inline, true);
+        return rng.random!T();
     }
 }
 else

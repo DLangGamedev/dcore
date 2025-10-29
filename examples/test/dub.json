@@ -15,7 +15,7 @@
     "sourcePaths": ["src"],
     "mainSourceFile": "src/main.d",
     
-    "versions": ["UseFreeStandingMath"],
+    "versions": ["UseFreeStandingMath", "UseFreeStandingRNG"],
 
     "configurations": [
         {
