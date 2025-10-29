@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 
 module dcore.math.base;
 
-//version = UseFreeStandingMath;
+// Use this version switch to build a version that only depends on libc
 //version = NoPhobos;
 
 version(FreeStanding)
@@ -55,6 +55,9 @@ enum double INVPI = 0.31830988618;
 enum double INVTWOPI = 0.15915494309;
 enum double TWOPI = 6.28318530718;
 enum double THREEHALFPI = 4.7123889;
+enum double LN2 = 0.693147180559945309417232121458;
+enum double INV_LN2 = 1.0 / LN2;
+enum double LOG10E = 0.4342944819032518;
 
 bool isNaN(T)(T x) pure nothrow @nogc
 {
@@ -312,16 +315,177 @@ T atan2Fallback(T)(T y, T x) pure nothrow @nogc
         return 0; // Undefined
 }
 
-// TODO: exp
-// TODO: log
-// TODO: log2
-// TODO: log10
-// TODO: pow
-// TODO: hypot
-// TODO: modf
-// TODO: gcd
-// TODO: lcm
-// TODO: exp2
+// exp: range reduction + Taylor on reduced interval
+T expFallback(T)(T x) pure nothrow @nogc
+{
+    if (isNaN(x)) return x;
+    if (isInfinity(x))
+        return (x > 0) ? T.infinity : 0;
+
+    // Range reduction: x = n*ln2 + r, |r| <= ln2/2
+    int n = cast(int)floorFallback(x * INV_LN2 + 0.5);
+    T r = x - cast(T)(n) * cast(T)LN2;
+
+    // Taylor series for e^r, enough terms for reasonable precision
+    T term = 1.0;
+    T sum = 1.0;
+    for (int k = 1; k <= 14; ++k)
+    {
+        term *= r / k;
+        sum += term;
+    }
+
+    // Multiply by 2^n via repeated doubling/halving (safe-ish)
+    if (n > 0)
+    {
+        while (n >= 30)
+        {
+            sum *= cast(T)(1UL << 30);
+            n -= 30;
+        }
+        if (n > 0) sum *= cast(T)(1UL << n);
+    }
+    else if (n < 0)
+    {
+        int m = -n;
+        while (m >= 30)
+        {
+            sum *= cast(T)(1.0) / cast(T)(1UL << 30);
+            m -= 30;
+        }
+        if (m > 0)
+            sum *= cast(T)(1.0) / cast(T)(1UL << m);
+    }
+
+    return sum;
+}
+
+// exp2: 2^x = e^(x ln2)
+T exp2Fallback(T)(T x) pure nothrow @nogc
+{
+    pragma(inline, true);
+    return expFallback(x * cast(T)LN2);
+}
+
+T logFallback(T)(T x) pure nothrow @nogc
+{
+    if (x <= 0) return T.nan;
+    if (isInfinity(x)) return T.infinity;
+    if (x == 1) return 0;
+
+    // Use range reduction via the identity log(x) = log(a * 2^n) = log(a) + n*log(2)
+    // where 0.5 <= a < 1
+    int n = 0;
+    T a = x;
+
+    // Scale a to [0.5, 1) range
+    while (a >= 2) { a *= 0.5; n++; }
+    while (a < 0.5) { a *= 2; n--; }
+
+    // Use series expansion for log(1+y) where y = a-1
+    // log(1+y) = y - y^2/2 + y^3/3 - y^4/4 + ...
+    T y = a - 1;
+    T y2 = y * y;
+    T sum = y;
+    T term = y;
+
+    // Add terms until contribution becomes negligible
+    for (int i = 2; i <= 12; i++)
+    {
+        term *= -y * (i - 1) / i;
+        sum += term;
+    }
+
+    return sum + cast(T)LN2 * n;
+}
+
+T log2Fallback(T)(T x) pure nothrow @nogc
+{
+    pragma(inline, true);
+    return logFallback(x) * cast(T)INV_LN2;
+}
+
+T log10Fallback(T)(T x) pure nothrow @nogc
+{
+    pragma(inline, true);
+    return logFallback(x) * cast(T)LOG10E;
+}
+
+T powFallback(T)(T x, T y) pure nothrow @nogc
+{
+    pragma(inline, true);
+    return x ^^ y;
+}
+
+T hypotFallback(T)(T x, T y) pure nothrow @nogc
+{
+    if (x == 0) return 0;
+    x = abs(x);
+    y = abs(y);
+    if (x < y)
+    {
+        auto t = x; x = y; y = t;
+    }
+    T r = y / x;
+    return x * sqrt(1.0 + r * r);
+}
+
+T modfFallback(T)(T x, ref T iptr) pure nothrow @nogc
+{
+    pragma(inline, true);
+    T i = trunc(x);
+    iptr = i;
+    return x - i;
+}
+
+// Greatest common divisor of a and b
+auto gcdIntegral(T)(T a, T b) pure nothrow @nogc
+if (is(T == byte) || is(T == ubyte) || is(T == short) || is(T == ushort) || 
+    is(T == int) || is(T == uint) || is(T == long) || is(T == ulong))
+{
+    import std.traits: isUnsigned;
+
+    // make non-negative
+    static if (isUnsigned!T)
+    {
+        // unsigned
+        if (a == 0) return b;
+        if (b == 0) return a;
+        while (b != 0)
+        {
+            auto t = a % b;
+            a = b;
+            b = t;
+        }
+        return a;
+    }
+    else
+    {
+        // signed
+        long aa = (a < 0) ? -a : a;
+        long bb = (b < 0) ? -b : b;
+        while (bb != 0)
+        {
+            long t = aa % bb;
+            aa = bb;
+            bb = t;
+        }
+        return cast(T)aa;
+    }
+}
+
+// Least common multiple of a and b
+auto lcmIntegral(T)(T a, T b) pure nothrow @nogc
+if (is(T == byte) || is(T == ubyte) || is(T == short) || is(T == ushort) || 
+    is(T == int) || is(T == uint) || is(T == long) || is(T == ulong))
+{
+    pragma(inline, true);
+    if (a == 0 || b == 0) return cast(T)0;
+    auto g = gcdIntegral(a, b);
+    // (a / g) * b may overflow for large ints
+    return (a / g) * b;
+}
+
 // TODO: sinh, cosh, tanh
 // TODO: asinh, acosh, atanh
 
@@ -336,6 +500,13 @@ version(LDC)
     alias sin = llvm_sin;
     alias cos = llvm_cos;
     alias tan = tanFallback;
+    alias exp = llvm_exp;
+    alias exp2 = llvm_exp2;
+    alias log = llvm_log;
+    alias log2 = llvm_log2;
+    alias log10 = llvm_log10;
+    alias pow = llvm_pow;
+    alias modf = modfFallback;
     
     version(UseFreeStandingMath)
     {
@@ -344,6 +515,9 @@ version(LDC)
         alias acos = acosFallback;
         alias atan = atanFallback;
         alias atan2 = atan2Fallback;
+        alias hypot = hypotFallback;
+        alias gcd = gcdIntegral;
+        alias lcm = lcmIntegral;
     }
     else version(NoPhobos)
     {
@@ -354,17 +528,24 @@ version(LDC)
             double acos(double x);
             double atan(double x);
             double atan2(double y, double x);
+            double hypot(double x, double y);
+            alias gcd = gcdIntegral;
+            alias lcm = lcmIntegral;
         }
     }
     else
     {
         import std.math;
+        import std.numeric;
         
         alias cbrt = std.math.cbrt;
         alias asin = std.math.asin;
         alias acos = std.math.acos;
         alias atan = std.math.atan;
         alias atan2 = std.math.atan2;
+        alias hypot = std.math.hypot;
+        alias gcd = std.numeric.gcd;
+        alias lcm = std.numeric.lcm;
     }
 }
 else
@@ -393,10 +574,20 @@ version(UseFreeStandingMath)
     alias acos = acosFallback;
     alias atan = atanFallback;
     alias atan2 = atan2Fallback;
+    alias exp = expFallback;
+    alias exp2 = exp2Fallback;
+    alias log = logFallback;
+    alias log2 = log2Fallback;
+    alias log10 = log10Fallback;
+    alias pow = powFallback;
+    alias hypot = hypotFallback;
+    alias modf = modfFallback;
+    alias gcd = gcdIntegral;
+    alias lcm = lcmIntegral;
 }
 else version(NoPhobos)
 {
-    extern(C) nothrow @nogc
+    extern(C) pure nothrow @nogc
     {
         double floor(double x);
         double ceil(double x);
@@ -410,11 +601,23 @@ else version(NoPhobos)
         double acos(double x);
         double atan(double x);
         double atan2(double y, double x);
+        double exp(double x);
+        double exp2(double x);
+        double log(double x);
+        double log2(double x);
+        double log10(double x);
+        double pow(double x, double y);
+        double hypot(double x, double y);
     }
+    
+    alias modf = modfFallback;
+    alias gcd = gcdIntegral;
+    alias lcm = lcmIntegral;
 }
 else
 {
     import std.math;
+    import std.numeric;
     
     alias floor = std.math.floor;
     alias ceil = std.math.ceil;
@@ -428,4 +631,14 @@ else
     alias acos = std.math.acos;
     alias atan = std.math.atan;
     alias atan2 = std.math.atan2;
+    alias exp = std.math.exp;
+    alias exp2 = std.math.exp2;
+    alias log = std.math.log;
+    alias log2 = std.math.log2;
+    alias log10 = std.math.log10;
+    alias pow = std.math.pow;
+    alias hypot = std.math.hypot;
+    alias modf = std.math.modf;
+    alias gcd = std.numeric.gcd;
+    alias lcm = std.numeric.lcm;
 }

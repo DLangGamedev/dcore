@@ -194,8 +194,6 @@ unittest
 /**
  * Round to next power of 10
  */
-/+
-// TODO: have to implement log10 first
 T nextPowerOfTen(T) (T k) pure nothrow @nogc
 {
     return pow(10, cast(int)ceil(log10(k)));
@@ -206,7 +204,6 @@ unittest
 {
     assert(nextPowerOfTen!double(80) == 100);
 }
-+/
 
 /**
  * If at least one element is zero
@@ -402,8 +399,6 @@ unittest
 /**
  * Integer part
  */
-/+
-// TODO: have to implement modf first
 real integer(real v) pure nothrow @nogc
 {
     real ipart;
@@ -416,13 +411,10 @@ unittest
 {
     assert(integer(54.832f) == 54.0f);
 }
-+/
 
 /**
  * Fractional part
  */
-/+
-// TODO: have to implement modf first
 real frac(real v)
 {
     real ipart;
@@ -434,4 +426,3 @@ unittest
 {
     assert(abs(frac(54.832f) - 0.832f) <= EPSILON);
 }
-+/
