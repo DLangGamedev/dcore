@@ -36,28 +36,31 @@ version(WebAssembly)
         
         void* malloc(size_t size)
         {
+            pragma(inline, true);
             return cast(void*)jsMalloc(size);
         }
         
         void free(void* mem)
         {
+            pragma(inline, true);
             jsFree(cast(uint)mem);
         }
         
         // Fallback
         void srand(uint seed)
         {
+            pragma(inline, true);
         }
         
         // Fallback
         int rand()
         {
+            pragma(inline, true);
             return 0;
         }
     }
 }
-else
-version(FreeStanding)
+else version(FreeStanding)
 {
     extern(C) nothrow @nogc
     {
@@ -69,6 +72,7 @@ version(FreeStanding)
         
         void* malloc(size_t size)
         {
+            pragma(inline, true);
             if (custom_malloc)
                 return custom_malloc(size);
             else
@@ -77,18 +81,21 @@ version(FreeStanding)
         
         void free(void* mem)
         {
+            pragma(inline, true);
             if (custom_free)
                 custom_free(mem);
         }
         
         void srand(uint seed)
         {
+            pragma(inline, true);
             if (custom_srand)
                 custom_srand(seed);
         }
         
         int rand()
         {
+            pragma(inline, true);
             if (custom_rand)
                 return custom_rand();
             else

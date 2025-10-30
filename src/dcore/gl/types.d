@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019-2025 Timur Gafarov
+Copyright (c) 2025 Timur Gafarov
 
 Boost Software License - Version 1.0 - August 17th, 2003
 
@@ -25,27 +25,30 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
+module dcore.gl.types;
 
-module dcore;
+alias GLbyte = byte;
+alias GLclampf = float;
+alias GLfixed = int;
+alias GLshort = short;
+alias GLushort = ushort;
+alias GLvoid = void;
+struct __GLsync;
+alias GLsync = __GLsync*;
+alias GLint64 = long;
+alias GLuint64 = ulong;
+alias GLenum = uint;
+alias GLuint = uint;
+alias GLchar = char;
+alias GLfloat = float;
+alias GLsizeiptr = size_t;
+alias GLintptr = ptrdiff_t;
+alias GLbitfield = uint;
+alias GLint = int;
+alias GLboolean = ubyte;
+alias GLsizei = int;
+alias GLubyte = ubyte;
 
-public
-{
-    import dcore.gl;
-    import dcore.linker;
-    import dcore.math;
-    import dcore.mutex;
-    import dcore.process;
-    import dcore.random;
-    import dcore.stdio;
-    import dcore.stdlib;
-    import dcore.sys;
-    import dcore.text;
-    import dcore.time;
-}
+enum GL_COLOR_BUFFER_BIT = 0x00004000;
 
-void init() nothrow @nogc
-{
-    dcore.time.init();
-    dcore.random.init();
-    dcore.gl.init();
-}
+// TODO: other types

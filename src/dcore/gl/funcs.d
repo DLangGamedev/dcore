@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019-2025 Timur Gafarov
+Copyright (c) 2025 Timur Gafarov
 
 Boost Software License - Version 1.0 - August 17th, 2003
 
@@ -25,27 +25,20 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
+module dcore.gl.funcs;
 
-module dcore;
+import dcore.gl.types;
 
-public
+extern(System) @nogc nothrow
 {
-    import dcore.gl;
-    import dcore.linker;
-    import dcore.math;
-    import dcore.mutex;
-    import dcore.process;
-    import dcore.random;
-    import dcore.stdio;
-    import dcore.stdlib;
-    import dcore.sys;
-    import dcore.text;
-    import dcore.time;
+    alias f_glClearColor = void function(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+    alias f_glClear = void function(GLenum mask);
+    alias f_glFlush = void function();
 }
 
-void init() nothrow @nogc
+__gshared
 {
-    dcore.time.init();
-    dcore.random.init();
-    dcore.gl.init();
+    f_glClearColor glClearColor;
+    f_glClear glClear;
+    f_glFlush glFlush;
 }

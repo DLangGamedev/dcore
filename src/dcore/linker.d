@@ -28,4 +28,51 @@ DEALINGS IN THE SOFTWARE.
 
 module dcore.linker;
 
-// TODO
+alias SharedLib = void*;
+
+version(Windows)
+{
+    import core.sys.windows.windows;
+}
+else version(Posix)
+{
+    import core.sys.posix.dlfcn;
+}
+
+SharedLib openLibrary(const(char)* filename) @nogc nothrow
+{
+    pragma(inline, true);
+    
+    version(Windows)
+    {
+        return LoadLibraryA(filename);
+    }
+    else version(Posix)
+    {
+        return dlopen(filename, RTLD_LAZY);
+    }
+    else
+    {
+        pragma(msg, "Warning: \"openLibrary\" is not implemented on this platform!");
+        return null;
+    }
+}
+
+void* getFunctionPointer(SharedLib lib, const(char)* name) @nogc nothrow
+{
+    pragma(inline, true);
+    
+    version(Windows)
+    {
+        return GetProcAddress(lib, name);
+    }
+    else version(Posix)
+    {
+        return dlsym(lib, name);
+    }
+    else
+    {
+        pragma(msg, "Warning: \"getFunctionPointer\" is not implemented on this platform!");
+        return null;
+    }
+}
