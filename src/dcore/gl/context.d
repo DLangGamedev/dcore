@@ -31,6 +31,16 @@ import dcore.linker;
 import dcore.gl.types;
 import dcore.gl.funcs;
 
+enum WGL_CONTEXT_MAJOR_VERSION_ARB = 0x2091;
+enum WGL_CONTEXT_MINOR_VERSION_ARB = 0x2092;
+enum WGL_CONTEXT_PROFILE_MASK_ARB = 0x9126;
+
+enum WGL_CONTEXT_ES_PROFILE_BIT_EXT = 0x00000004;
+enum WGL_CONTEXT_ES2_PROFILE_BIT_EXT = 0x00000004;
+
+enum WGL_CONTEXT_CORE_PROFILE_BIT_ARB = 0x00000001;
+enum WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB = 0x00000002;
+
 struct OpenGLVersion
 {
     int major;
@@ -62,16 +72,6 @@ version(Windows)
 {
     import core.sys.windows.windows;
     
-    enum WGL_CONTEXT_MAJOR_VERSION_ARB = 0x2091;
-    enum WGL_CONTEXT_MINOR_VERSION_ARB = 0x2092;
-    enum WGL_CONTEXT_PROFILE_MASK_ARB = 0x9126;
-    
-    enum WGL_CONTEXT_ES_PROFILE_BIT_EXT = 0x00000004;
-    enum WGL_CONTEXT_ES2_PROFILE_BIT_EXT = 0x00000004;
-    
-    enum WGL_CONTEXT_CORE_PROFILE_BIT_ARB = 0x00000001;
-    enum WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB = 0x00000002;
-    
     extern(Windows) @nogc nothrow
     {
         alias f_wglCreateContext = HGLRC function(HDC);
@@ -92,26 +92,33 @@ version(Windows)
         
         private SharedLib ogl32;
     }
-    
-    void* loadGLProc(const(char)* name) @nogc nothrow
-    {
-        pragma(inline, true);
-        void* p = wglGetProcAddress(name);
-        if (p !is null)
-            return p;
-        return getFunctionPointer(ogl32, name);
-    }
 }
 else version(Posix)
 {
     import core.sys.posix.dlfcn;
     
     __gshared void* libgl;
+}
+
+void* loadGLProc(const(char)* name) @nogc nothrow
+{
+    pragma(inline, true);
     
-    void* loadGLProcPosix(const(char)* name) @nogc nothrow
+    version(Windows)
     {
-        pragma(inline, true);
+        void* p = wglGetProcAddress(name);
+        if (p !is null)
+             return p;
+        return getFunctionPointer(ogl32, name);
+    }
+    else version(Posix)
+    {
         return getFunctionPointer(libgl, name);
+    }
+    else
+    {
+        pragma(msg, "Warning: \"loadGLProc\" is not implemented on this platform!");
+        return null;
     }
 }
 
@@ -129,6 +136,10 @@ void init() @nogc nothrow
     {
         libgl = openLibrary("libGL.so.1", RTLD_LAZY);
         
+        // TODO
+    }
+    else version(WebAssembly)
+    {
         // TODO
     }
 }
