@@ -13,7 +13,7 @@ Progress
 * [ ] `dcore.stdio` - standard C I/O for platforms that support it
 * [ ] `dcore.stdlib` - `malloc/free` for platforms that support it
 * [ ] `dcore.math` - highly portable math functions, using hardware optimizations where possible
-* [x] `dcore.random` - presudo-random number generator based on C `rand` + standalone RNG with platform-independent enthropy source
+* [x] `dcore.random` - presudo-random number generator based on C `rand` + standalone RNG with platform-independent entropy source
 * [x] `dcore.sys` - retrieve system information
 * [ ] `dcore.process` - cross-platform process API
 * [x] `dcore.time` - cross-platform date and time API
@@ -21,7 +21,7 @@ Progress
 * [x] `dcore.mutex` - cross-platform thread synchronization primitive
 * [x] `dcore.linker` - cross-platform dynamic library linker
 * [ ] `dcore.text` - string processing, UTF-8 decoder
-* [ ] `dcore.gl` - cross-platform OpenGL binding
+* [ ] `dcore.gl` - cross-platform OpenGL/OpenGL ES binding
 
 License
 -------
