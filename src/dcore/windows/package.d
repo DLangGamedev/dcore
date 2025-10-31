@@ -43,6 +43,7 @@ struct WindowState
 {
     int width;
     int height;
+    const(wchar)* title;
     WindowStateSignal ss;
 }
 
@@ -66,8 +67,8 @@ extern(Windows) LRESULT WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
             PostQuitMessage(0);
             return 0;
         case WM_SIZE:
-            windowState.width = LOWORD(lParam);
-            windowState.height = HIWORD(lParam);
+            windowState.width = lParam & 0xFFFF;
+            windowState.height = cast(int)(lParam >> 16);
             windowState.ss = WindowStateSignal.Resize;
             return 0;
         default:
