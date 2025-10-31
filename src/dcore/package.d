@@ -41,6 +41,7 @@ public
     import dcore.sys;
     import dcore.text;
     import dcore.time;
+    import dcore.windows;
 }
 
 void init() nothrow @nogc

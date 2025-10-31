@@ -22,6 +22,7 @@ Progress
 * [x] `dcore.linker` - cross-platform dynamic library linker
 * [ ] `dcore.text` - string processing, UTF-8 decoder
 * [ ] `dcore.gl` - cross-platform OpenGL/OpenGL ES binding
+* [ ] `dcore.windows` - helper functions under Windows.
 
 License
 -------

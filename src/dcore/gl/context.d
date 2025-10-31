@@ -87,20 +87,20 @@ version(Windows)
         f_wglDeleteContext wglDeleteContext;
         f_wglGetProcAddress wglGetProcAddress;
         f_wglMakeCurrent wglMakeCurrent;
-        
         f_wglCreateContextAttribsARB wglCreateContextAttribsARB;
-        
-        private SharedLib ogl32;
     }
 }
 else version(Posix)
 {
     import core.sys.posix.dlfcn;
-    
-    __gshared void* libgl;
 }
 
-void* loadGLProc(const(char)* name) @nogc nothrow
+__gshared
+{
+    private SharedLib libogl;
+}
+
+private void* loadGLProc(const(char)* name) @nogc nothrow
 {
     pragma(inline, true);
     
@@ -109,11 +109,11 @@ void* loadGLProc(const(char)* name) @nogc nothrow
         void* p = wglGetProcAddress(name);
         if (p !is null)
              return p;
-        return getFunctionPointer(ogl32, name);
+        return getFunctionPointer(libogl, name);
     }
     else version(Posix)
     {
-        return getFunctionPointer(libgl, name);
+        return getFunctionPointer(libogl, name);
     }
     else
     {
@@ -126,15 +126,15 @@ void init() @nogc nothrow
 {
     version(Windows)
     {
-        ogl32 = openLibrary("Opengl32.dll");
-        wglCreateContext = cast(f_wglCreateContext)getFunctionPointer(ogl32, "wglCreateContext");
-        wglDeleteContext = cast(f_wglDeleteContext)getFunctionPointer(ogl32, "wglDeleteContext");
-        wglGetProcAddress = cast(f_wglGetProcAddress)getFunctionPointer(ogl32, "wglGetProcAddress");
-        wglMakeCurrent = cast(f_wglMakeCurrent)getFunctionPointer(ogl32, "wglMakeCurrent");
+        libogl = openLibrary("Opengl32.dll");
+        wglCreateContext = cast(f_wglCreateContext)getFunctionPointer(libogl, "wglCreateContext");
+        wglDeleteContext = cast(f_wglDeleteContext)getFunctionPointer(libogl, "wglDeleteContext");
+        wglGetProcAddress = cast(f_wglGetProcAddress)getFunctionPointer(libogl, "wglGetProcAddress");
+        wglMakeCurrent = cast(f_wglMakeCurrent)getFunctionPointer(libogl, "wglMakeCurrent");
     }
     else version(Posix)
     {
-        libgl = openLibrary("libGL.so.1", RTLD_LAZY);
+        libogl = openLibrary("libGL.so.1", RTLD_LAZY);
         
         // TODO
     }
@@ -146,7 +146,7 @@ void init() @nogc nothrow
 
 version(Windows)
 {
-    HGLRC loadOpenGL_Windows(HDC hdc, OpenGLVersion oglv)
+    private HGLRC loadOpenGL_Windows(HDC hdc, OpenGLVersion oglv)
     {
         PIXELFORMATDESCRIPTOR pfd;
         pfd.nSize = PIXELFORMATDESCRIPTOR.sizeof;
@@ -211,11 +211,26 @@ void* loadOpenGL(void* deviceContext, OpenGLVersion oglv)
     }
 }
 
-void loadOpenGLFunctions(OpenGLVersion oglv)
+void bindGLSymbol(void** symbolPtr, const(char)* name)
 {
+    *symbolPtr = loadGLProc(name);
+}
+
+private void loadOpenGLFunctions(OpenGLVersion oglv)
+{
+    static foreach(symbol; __traits(allMembers, dcore.gl.funcs))
+    {
+        static if (symbol.length > 2 && symbol[0..2] == "gl")
+            bindGLSymbol(
+                cast(void**)&__traits(getMember, dcore.gl.funcs, symbol),
+                __traits(getMember, dcore.gl.funcs, symbol).stringof);
+    }
+    
+    /*
     glClearColor = cast(f_glClearColor)loadGLProc("glClearColor");
     glClear = cast(f_glClear)loadGLProc("glClear");
     glFlush = cast(f_glFlush)loadGLProc("glFlush");
+    */
     
     // TODO: other functions
 }

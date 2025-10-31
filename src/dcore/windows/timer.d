@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2025 Timur Gafarov
+Copyright (c) 2025 Timur Gafarov.
 
 Boost Software License - Version 1.0 - August 17th, 2003
 
@@ -25,31 +25,34 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
-module dcore.gl.funcs;
+module dcore.windows.timer;
 
-import dcore.gl.signatures;
+version(Windows):
 
-__gshared
+import core.sys.windows.windows;
+
+private
 {
-    f_glActiveTexture glActiveTexture;
-    f_glAttachShader glAttachShader;
-    
-    f_glBindAttribLocation glBindAttribLocation;
-    f_glBindBuffer glBindBuffer;
-    f_glBindFramebuffer glBindFramebuffer;
-    f_glBindRenderbuffer glBindRenderbuffer;
-    f_glBindTexture glBindTexture;
-    f_glBlendColor glBlendColor;
-    f_glBlendEquation glBlendEquation;
-    f_glBlendEquationSeparate glBlendEquationSeparate;
-    f_glBlendFunc glBlendFunc;
-    f_glBlendFuncSeparate glBlendFuncSeparate;
-    f_glBufferData glBufferData;
-    f_glBufferSubData glBufferSubData;
-    
-    f_glCheckFramebufferStatus glCheckFramebufferStatus;
-    f_glClear glClear;
-    f_glClearColor glClearColor;
-    
-    f_glFlush glFlush;
+    __gshared LARGE_INTEGER t_freq;
+    __gshared LARGE_INTEGER t_last;
+    __gshared bool t_initialized = false;
+}
+
+double getTimeStep()
+{
+    if (!t_initialized)
+    {
+        // First call
+        QueryPerformanceFrequency(&t_freq);
+        QueryPerformanceCounter(&t_last);
+        t_initialized = true;
+        return 0.0;
+    }
+
+    LARGE_INTEGER counter;
+    QueryPerformanceCounter(&counter);
+
+    double dt = cast(double)(counter.QuadPart - t_last.QuadPart) / cast(double)(t_freq.QuadPart);
+    t_last = counter;
+    return dt;
 }
