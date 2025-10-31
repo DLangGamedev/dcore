@@ -19,7 +19,7 @@ Progress
 * [x] `dcore.time` - cross-platform date and time API
 * [ ] `dcore.thread` - cross-platform multithreading API
 * [x] `dcore.mutex` - cross-platform thread synchronization primitive
-* [x] `dcore.linker` - cross-platform dynamic library linker
+* [x] `dcore.linker` - cross-platform dynamic library loader
 * [ ] `dcore.text` - string processing, UTF-8 decoder
 * [ ] `dcore.gl` - cross-platform OpenGL/OpenGL ES binding
 * [ ] `dcore.windows` - helper functions under Windows.
