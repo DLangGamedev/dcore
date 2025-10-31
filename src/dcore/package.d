@@ -30,14 +30,16 @@ module dcore;
 
 public
 {
+    import dcore.c.stdio;
+    import dcore.c.stdlib;
+    import dcore.c.time;
+    
     import dcore.gl;
     import dcore.linker;
     import dcore.math;
     import dcore.mutex;
     import dcore.process;
     import dcore.random;
-    import dcore.stdio;
-    import dcore.stdlib;
     import dcore.sys;
     import dcore.text;
     import dcore.time;
