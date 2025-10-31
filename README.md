@@ -1,9 +1,9 @@
 dcore
 =====
-Low level general-purpose library for [D language](https://dlang.org). Partial successor of [dlib 1.x](https://github.com/gecko0307/dlib) and a future base for dlib 2.0.
+Low level general-purpose library for [D language](https://dlang.org) to faciliate real-time application development. Partial successor of [dlib 1.x](https://github.com/gecko0307/dlib) and a future base for dlib 2.0.
 
 * `betterC` compliant
-* Independent from Phobos for core functionality. Uses only `betterC` parts of Phobos, like `std.traits` and system APIs
+* Independent from druntime for core functionality. Uses only `betterC` parts of Phobos, like `std.traits` and system APIs
 * Will become a minimal standard library: include standard I/O, math, data manipulation, etc.
 * As much as possible support for bare metal/WebAssembly/ARM
 * Extensive unit testing
@@ -26,4 +26,4 @@ Progress
 
 License
 -------
-Copyright (c) 2025 Timur Gafarov. Distributed under the Boost Software License, Version 1.0 (see accompanying file COPYING or at https://www.boost.org/LICENSE_1_0.txt).
+Copyright (c) 2019-2025 Timur Gafarov. Distributed under the Boost Software License, Version 1.0 (see accompanying file COPYING or at https://www.boost.org/LICENSE_1_0.txt).
