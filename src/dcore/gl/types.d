@@ -49,6 +49,45 @@ alias GLboolean = ubyte;
 alias GLsizei = int;
 alias GLubyte = ubyte;
 
-enum GL_COLOR_BUFFER_BIT = 0x00004000;
+enum GL_DEPTH_BUFFER_BIT = 0x0100;
+enum GL_STENCIL_BUFFER_BIT = 0x400;
+enum GL_COLOR_BUFFER_BIT = 0x4000;
+
+enum GL_FALSE = 0;
+enum GL_TRUE = 1;
+enum GL_POINTS = 0x0000;
+enum GL_LINES = 0x0001;
+enum GL_LINE_LOOP = 0x0002;
+enum GL_LINE_STRIP = 0x0003;
+enum GL_TRIANGLES = 0x0004;
+enum GL_TRIANGLE_STRIP = 0x0005;
+enum GL_TRIANGLE_FAN = 0x0006;
+enum GL_ZERO = 0;
+enum GL_ONE = 1;
+
+enum GL_UNSIGNED_SHORT = 0x1403;
+
+enum GL_FLOAT = 0x1406;
+
+enum GL_ARRAY_BUFFER = 0x8892;
+enum GL_ELEMENT_ARRAY_BUFFER = 0x8893;
+
+enum GL_STATIC_DRAW = 0x88E4;
+
+enum GL_CULL_FACE = 0x0B44;
+
+enum GL_DEPTH_TEST = 0x0B71;
+
+enum GL_NEVER = 0x0200;
+enum GL_LESS = 0x0201;
+enum GL_EQUAL = 0x0202;
+enum GL_LEQUAL = 0x0203;
+enum GL_GREATER = 0x0204;
+enum GL_NOTEQUAL = 0x0205;
+enum GL_GEQUAL = 0x0206;
+enum GL_ALWAYS = 0x0207;
+
+enum GL_FRAGMENT_SHADER = 0x8B30;
+enum GL_VERTEX_SHADER = 0x8B31;
 
 // TODO: other types

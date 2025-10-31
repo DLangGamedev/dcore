@@ -33,12 +33,42 @@ version(Windows):
 
 public import core.sys.windows.windows;
 
+enum WindowStateSignal
+{
+    None = 0,
+    Resize = 1
+}
+
+struct WindowState
+{
+    int width;
+    int height;
+    WindowStateSignal ss;
+}
+
 extern(Windows) LRESULT WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) nothrow
 {
+    if (msg == WM_NCCREATE)
+    {
+        auto createStruct = cast(CREATESTRUCT*)lParam;
+        auto windowState = cast(WindowState*)createStruct.lpCreateParams;
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, cast(LONG_PTR)windowState);
+        return TRUE;
+    }
+    
+    auto windowState = cast(WindowState*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+    if (windowState is null)
+        return DefWindowProc(hwnd, msg, wParam, lParam);
+    
     switch (msg)
     {
         case WM_DESTROY:
             PostQuitMessage(0);
+            return 0;
+        case WM_SIZE:
+            windowState.width = LOWORD(lParam);
+            windowState.height = HIWORD(lParam);
+            windowState.ss = WindowStateSignal.Resize;
             return 0;
         default:
             break;
@@ -46,7 +76,7 @@ extern(Windows) LRESULT WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-HWND createWindow(uint width, uint height, const(wchar)* title)
+HWND createWindow(uint width, uint height, const(wchar)* title, WindowState* windowState)
 {
     WNDCLASS wc;
     wc.style = 0;
@@ -72,7 +102,7 @@ HWND createWindow(uint width, uint height, const(wchar)* title)
         title,
         WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
         100, 100, 800, 600,
-        null, null, wc.hInstance, null
+        null, null, wc.hInstance, windowState
     );
     
     return hwnd;

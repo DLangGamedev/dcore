@@ -39,6 +39,7 @@ __gshared
     f_glBindFramebuffer glBindFramebuffer;
     f_glBindRenderbuffer glBindRenderbuffer;
     f_glBindTexture glBindTexture;
+    f_glBindVertexArray glBindVertexArray;
     f_glBlendColor glBlendColor;
     f_glBlendEquation glBlendEquation;
     f_glBlendEquationSeparate glBlendEquationSeparate;
@@ -50,6 +51,32 @@ __gshared
     f_glCheckFramebufferStatus glCheckFramebufferStatus;
     f_glClear glClear;
     f_glClearColor glClearColor;
+    f_glClearDepthf glClearDepthf;
+    f_glClearStencil glClearStencil;
+    f_glCompileShader glCompileShader;
+    f_glCreateProgram glCreateProgram;
+    f_glCreateShader glCreateShader;
+    
+    f_glDepthFunc glDepthFunc;
+    f_glDisable glDisable;
+    f_glDrawElements glDrawElements;
+    
+    f_glEnable glEnable;
+    f_glEnableVertexAttribArray glEnableVertexAttribArray;
     
     f_glFlush glFlush;
+    
+    f_glGenBuffers glGenBuffers;
+    f_glGenVertexArrays glGenVertexArrays;
+    f_glGetUniformLocation glGetUniformLocation;
+    
+    f_glLinkProgram glLinkProgram;
+    
+    f_glShaderSource glShaderSource;
+    
+    f_glUniformMatrix4fv glUniformMatrix4fv;
+    f_glUseProgram glUseProgram;
+    
+    f_glVertexAttribPointer glVertexAttribPointer;
+    f_glViewport glViewport;
 }

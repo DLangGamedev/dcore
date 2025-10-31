@@ -39,16 +39,43 @@ alias f_glBindBuffer = void function(GLenum target, GLuint buffer);
 alias f_glBindFramebuffer = void function(GLenum target, GLuint framebuffer);
 alias f_glBindRenderbuffer = void function(GLenum target, GLuint renderbuffer);
 alias f_glBindTexture = void function(GLenum target, GLuint texture);
+alias f_glBindVertexArray = void function(GLuint array);
 alias f_glBlendColor = void function(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 alias f_glBlendEquation = void function(GLenum mode);
 alias f_glBlendEquationSeparate = void function(GLenum modeRGB, GLenum modeAlpha);
 alias f_glBlendFunc = void function(GLenum sfactor, GLenum dfactor);
 alias f_glBlendFuncSeparate = void function(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
-alias f_glBufferData = void function(GLenum target, GLsizeiptr size, const void *data, GLenum usage);
-alias f_glBufferSubData = void function(GLenum target, GLintptr offset, GLsizeiptr size, const void *data);
+alias f_glBufferData = void function(GLenum target, GLsizeiptr size, const(void)* data, GLenum usage);
+alias f_glBufferSubData = void function(GLenum target, GLintptr offset, GLsizeiptr size, const(void)* data);
 
 alias f_glCheckFramebufferStatus = GLenum function(GLenum target);
 alias f_glClear = void function(GLenum mask);
 alias f_glClearColor = void function(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+alias f_glClearDepthf = void function(GLfloat d);
+alias f_glClearStencil = void function(GLint s);
+alias f_glCompileShader = void function(GLuint shader);
+alias f_glCreateProgram = GLuint function();
+alias f_glCreateShader = GLuint function(GLenum type);
+
+alias f_glDepthFunc = void function(GLenum func);
+alias f_glDisable = void function(GLenum cap);
+alias f_glDrawElements = void function(GLenum mode, GLsizei count, GLenum type, const(void)* indices);
+
+alias f_glEnable = void function(GLenum cap);
+alias f_glEnableVertexAttribArray = void function(GLuint index);
 
 alias f_glFlush = void function();
+
+alias f_glGenBuffers = void function(GLsizei n, GLuint* buffers);
+alias f_glGenVertexArrays = void function(GLsizei n, GLuint* arrays);
+alias f_glGetUniformLocation = GLint function(GLuint program, const(GLchar)* name);
+
+alias f_glLinkProgram = void function(GLuint program);
+
+alias f_glShaderSource = void function(GLuint shader, GLsizei count, const(const(GLchar)*)* string, const(GLint)* length);
+
+alias f_glUniformMatrix4fv = void function(GLint location, GLsizei count, GLboolean transpose, const(GLfloat)* value);
+alias f_glUseProgram = void function(GLuint program);
+
+alias f_glVertexAttribPointer = void function(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const(void)* pointer);
+alias f_glViewport = void function(GLint x, GLint y, GLsizei width, GLsizei height);
