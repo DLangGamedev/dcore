@@ -486,8 +486,59 @@ if (is(T == byte) || is(T == ubyte) || is(T == short) || is(T == ushort) ||
     return (a / g) * b;
 }
 
-// TODO: sinh, cosh, tanh
-// TODO: asinh, acosh, atanh
+T sinhFallback(T)(T x) pure nothrow @nogc
+{
+    if (isNaN(x)) return x;
+    if (isInfinity(x)) return x;
+    T ex = exp(x);
+    T exn = 1.0 / ex; // exp(-x)
+    return (ex - exn) * 0.5;
+}
+
+T coshFallback(T)(T x) pure nothrow @nogc
+{
+    if (isNaN(x)) return x;
+    if (isInfinity(x)) return T.infinity;
+    T ex = exp(x);
+    T exn = 1.0 / ex;
+    return (ex + exn) * 0.5;
+}
+
+T tanhFallback(T)(T x) pure nothrow @nogc
+{
+    if (isNaN(x)) return x;
+    if (isInfinity(x))
+        return (x > 0) ? cast(T)1.0 : cast(T)-1.0;
+    T two = 2.0;
+    T ex2 = exp(-two * x);
+    return (1.0 - ex2) / (1.0 + ex2);
+}
+
+T asinhFallback(T)(T x) pure nothrow @nogc
+{
+    if (isNaN(x)) return x;
+    if (isInfinity(x)) return (x > 0) ? T.infinity : -T.infinity;
+    T s = sqrt(x * x + 1.0);
+    return log(x + s);
+}
+
+T acoshFallback(T)(T x) pure nothrow @nogc
+{
+    if (isNaN(x)) return x;
+    if (x < 1.0) return T.nan;
+    if (isInfinity(x)) return T.infinity;
+    T s = sqrt((x - 1.0) * (x + 1.0));
+    return log(x + s);
+}
+
+T atanhFallback(T)(T x) pure nothrow @nogc
+{
+    if (isNaN(x)) return x;
+    if (x == 1.0) return T.infinity;
+    if (x == -1.0) return -T.infinity;
+    if (abs(x) > 1.0) return T.nan;
+    return 0.5 * log((1.0 + x) / (1.0 - x));
+}
 
 version(LDC)
 {
@@ -518,6 +569,12 @@ version(LDC)
         alias hypot = hypotFallback;
         alias gcd = gcdIntegral;
         alias lcm = lcmIntegral;
+        alias sinh = sinhFallback;
+        alias cosh = coshFallback;
+        alias tanh = tanhFallback;
+        alias asinh = asinhFallback;
+        alias acosh = acoshFallback;
+        alias atanh = atanhFallback;
     }
     else version(NoPhobos)
     {
@@ -531,6 +588,12 @@ version(LDC)
             double hypot(double x, double y);
             alias gcd = gcdIntegral;
             alias lcm = lcmIntegral;
+            double sinh(double x);
+            double cosh(double x);
+            double tanh(double x);
+            double asinh(double x);
+            double acosh(double x);
+            double atanh(double x);
         }
     }
     else
@@ -546,6 +609,12 @@ version(LDC)
         alias hypot = std.math.hypot;
         alias gcd = std.numeric.gcd;
         alias lcm = std.numeric.lcm;
+        alias sinh = std.math.sinh;
+        alias cosh = std.math.cosh;
+        alias tanh = std.math.tanh;
+        alias asinh = std.math.asinh;
+        alias acosh = std.math.acosh;
+        alias atanh = std.math.atanh;
     }
 }
 else
@@ -584,6 +653,12 @@ version(UseFreeStandingMath)
     alias modf = modfFallback;
     alias gcd = gcdIntegral;
     alias lcm = lcmIntegral;
+    alias sinh = sinhFallback;
+    alias cosh = coshFallback;
+    alias tanh = tanhFallback;
+    alias asinh = asinhFallback;
+    alias acosh = acoshFallback;
+    alias atanh = atanhFallback;
 }
 else version(NoPhobos)
 {
@@ -608,6 +683,12 @@ else version(NoPhobos)
         double log10(double x);
         double pow(double x, double y);
         double hypot(double x, double y);
+        double sinh(double x);
+        double cosh(double x);
+        double tanh(double x);
+        double asinh(double x);
+        double acosh(double x);
+        double atanh(double x);
     }
     
     alias modf = modfFallback;
@@ -641,4 +722,10 @@ else
     alias modf = std.math.modf;
     alias gcd = std.numeric.gcd;
     alias lcm = std.numeric.lcm;
+    alias sinh = std.math.sinh;
+    alias cosh = std.math.cosh;
+    alias tanh = std.math.tanh;
+    alias asinh = std.math.sinh;
+    alias acosh = std.math.cosh;
+    alias atanh = std.math.tanh;
 }

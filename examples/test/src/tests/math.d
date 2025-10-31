@@ -8,13 +8,13 @@ import std.datetime.stopwatch;
 
 void testPrecision(alias f, alias f_ref, alias mi, alias ma, T)()
 {
-    auto testRange = iota(0, 101)
+    T[] testRange = iota(0.0, 101.0)
         .map!(x => cast(T)mi + x * cast(T)0.01 * ma)
         .array;
 
     double maxError = 0.0;
 
-    foreach (x; testRange)
+    foreach (T x; testRange)
     {
         double testResult = f(x);
         double refResult = f_ref(x);

@@ -12,7 +12,7 @@ Progress
 --------
 * [ ] `dcore.stdio` - standard C I/O for platforms that support it
 * [ ] `dcore.stdlib` - `malloc/free` for platforms that support it
-* [ ] `dcore.math` - highly portable math functions, using hardware optimizations where possible
+* [x] `dcore.math` - highly portable math functions, using hardware optimizations where possible
 * [x] `dcore.random` - presudo-random number generator based on C `rand` + standalone RNG with platform-independent entropy source
 * [x] `dcore.sys` - retrieve system information
 * [ ] `dcore.process` - cross-platform process API
