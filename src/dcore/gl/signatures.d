@@ -53,11 +53,23 @@ alias f_glClear = void function(GLenum mask);
 alias f_glClearColor = void function(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 alias f_glClearDepthf = void function(GLfloat d);
 alias f_glClearStencil = void function(GLint s);
+alias f_glColorMask = void function(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
 alias f_glCompileShader = void function(GLuint shader);
+alias f_glCompressedTexImage2D = void function(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const(void)* data);
+alias f_glCompressedTexSubImage2D = void function(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const(void)* data);
+alias f_glCopyTexImage2D = void function(GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border);
+alias f_glCopyTexSubImage2D = void function(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height);
 alias f_glCreateProgram = GLuint function();
 alias f_glCreateShader = GLuint function(GLenum type);
-
+alias f_glCullFace = void function(GLenum mode);
+alias f_glDeleteBuffers = void function(GLsizei n, const(GLuint)* buffers);
+alias f_glDeleteFramebuffers = void function(GLsizei n, const(GLuint)* framebuffers);
+alias f_glDeleteProgram = void function(GLuint program);
+alias f_glDeleteRenderbuffers = void function(GLsizei n, const(GLuint)* renderbuffers);
+alias f_glDeleteShader = void function(GLuint shader);
+alias f_glDeleteTextures = void function(GLsizei n, const(GLuint)* textures);
 alias f_glDepthFunc = void function(GLenum func);
+
 alias f_glDisable = void function(GLenum cap);
 alias f_glDrawElements = void function(GLenum mode, GLsizei count, GLenum type, const(void)* indices);
 

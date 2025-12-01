@@ -29,7 +29,8 @@ module dcore.gl.context;
 
 import dcore.linker;
 import dcore.gl.types;
-import dcore.gl.funcs;
+import dcore.gl.gles20;
+import dcore.gl.gles30;
 
 enum WGL_CONTEXT_MAJOR_VERSION_ARB = 0x2091;
 enum WGL_CONTEXT_MINOR_VERSION_ARB = 0x2092;
@@ -74,19 +75,40 @@ version(Windows)
     
     extern(Windows) @nogc nothrow
     {
+        alias f_wglCopyContext = BOOL function(HGLRC, HGLRC, uint);
         alias f_wglCreateContext = HGLRC function(HDC);
+        alias f_wglCreateLayerContext = HGLRC function(HDC, int);
         alias f_wglDeleteContext = BOOL function(HGLRC);
+        alias f_wglDescribeLayerPlane = BOOL function(HDC, int, int, uint, LPLAYERPLANEDESCRIPTOR);
+        alias f_wglGetCurrentContext = HGLRC function();
+        alias f_wglGetCurrentDC = HDC function();
+        alias f_wglGetLayerPaletteEntries = int function(HDC, int, int, int, COLORREF*);
         alias f_wglGetProcAddress = PROC function(LPCSTR);
         alias f_wglMakeCurrent = BOOL function(HDC, HGLRC);
+        //wglRealizeLayerPalette
+        //wglSetLayerPaletteEntries
+        //wglShareLists
+        //wglSwapLayerBuffers
+        //wglUseFontBitmaps
+        //wglUseFontOutlines
+        
         alias f_wglCreateContextAttribsARB = HGLRC function(HDC hDC, HGLRC hShareContext, const(int)* attribList);
+
     }
     
     __gshared
     {
+        f_wglCopyContext wglCopyContext;
         f_wglCreateContext wglCreateContext;
+        f_wglCreateLayerContext wglCreateLayerContext;
         f_wglDeleteContext wglDeleteContext;
+        f_wglDescribeLayerPlane wglDescribeLayerPlane;
+        f_wglGetCurrentContext wglGetCurrentContext;
+        f_wglGetCurrentDC wglGetCurrentDC;
+        f_wglGetLayerPaletteEntries wglGetLayerPaletteEntries;
         f_wglGetProcAddress wglGetProcAddress;
         f_wglMakeCurrent wglMakeCurrent;
+        
         f_wglCreateContextAttribsARB wglCreateContextAttribsARB;
     }
 }
@@ -127,8 +149,14 @@ void init() @nogc nothrow
     version(Windows)
     {
         libogl = openLibrary("Opengl32.dll");
+        wglCopyContext = cast(f_wglCopyContext)getFunctionPointer(libogl, "wglCopyContext");
         wglCreateContext = cast(f_wglCreateContext)getFunctionPointer(libogl, "wglCreateContext");
+        wglCreateLayerContext = cast(f_wglCreateLayerContext)getFunctionPointer(libogl, "wglCreateLayerContext");
         wglDeleteContext = cast(f_wglDeleteContext)getFunctionPointer(libogl, "wglDeleteContext");
+        wglDescribeLayerPlane = cast(f_wglDescribeLayerPlane)getFunctionPointer(libogl, "wglDescribeLayerPlane");
+        wglGetCurrentContext = cast(f_wglGetCurrentContext)getFunctionPointer(libogl, "wglGetCurrentContext");
+        wglGetCurrentDC = cast(f_wglGetCurrentDC)getFunctionPointer(libogl, "wglGetCurrentDC");
+        wglGetLayerPaletteEntries = cast(f_wglGetLayerPaletteEntries)getFunctionPointer(libogl, "wglGetLayerPaletteEntries");
         wglGetProcAddress = cast(f_wglGetProcAddress)getFunctionPointer(libogl, "wglGetProcAddress");
         wglMakeCurrent = cast(f_wglMakeCurrent)getFunctionPointer(libogl, "wglMakeCurrent");
     }
@@ -216,21 +244,27 @@ void bindGLSymbol(void** symbolPtr, const(char)* name)
     *symbolPtr = loadGLProc(name);
 }
 
-private void loadOpenGLFunctions(OpenGLVersion oglv)
+void loadOpenGLFunctions(OpenGLVersion oglv)
 {
-    static foreach(symbol; __traits(allMembers, dcore.gl.funcs))
+    if (oglv.major >= 2)
     {
-        static if (symbol.length > 2 && symbol[0..2] == "gl")
-            bindGLSymbol(
-                cast(void**)&__traits(getMember, dcore.gl.funcs, symbol),
-                __traits(getMember, dcore.gl.funcs, symbol).stringof);
+        static foreach(symbol; __traits(allMembers, dcore.gl.gles20))
+        {
+            static if (symbol.length > 2 && symbol[0..2] == "gl")
+                bindGLSymbol(
+                    cast(void**)&__traits(getMember, dcore.gl.gles20, symbol),
+                    __traits(getMember, dcore.gl.gles20, symbol).stringof);
+        }
     }
     
-    /*
-    glClearColor = cast(f_glClearColor)loadGLProc("glClearColor");
-    glClear = cast(f_glClear)loadGLProc("glClear");
-    glFlush = cast(f_glFlush)loadGLProc("glFlush");
-    */
-    
-    // TODO: other functions
+    if (oglv.major >= 3)
+    {
+        static foreach(symbol; __traits(allMembers, dcore.gl.gles30))
+        {
+            static if (symbol.length > 2 && symbol[0..2] == "gl")
+                bindGLSymbol(
+                    cast(void**)&__traits(getMember, dcore.gl.gles30, symbol),
+                    __traits(getMember, dcore.gl.gles30, symbol).stringof);
+        }
+    }
 }

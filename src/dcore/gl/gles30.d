@@ -25,12 +25,11 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
-module dcore.gl;
+module dcore.gl.gles30;
 
-public
+import dcore.gl.signatures;
+
+__gshared
 {
-    import dcore.gl.types;
-    import dcore.gl.gles20;
-    import dcore.gl.gles30;
-    import dcore.gl.context;
+    // TODO
 }

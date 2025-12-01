@@ -25,7 +25,7 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
-module dcore.gl.funcs;
+module dcore.gl.gles20;
 
 import dcore.gl.signatures;
 
@@ -53,11 +53,24 @@ __gshared
     f_glClearColor glClearColor;
     f_glClearDepthf glClearDepthf;
     f_glClearStencil glClearStencil;
+    f_glColorMask glColorMask;
     f_glCompileShader glCompileShader;
+    f_glCompressedTexImage2D glCompressedTexImage2D;
+    f_glCompressedTexSubImage2D glCompressedTexSubImage2D;
+    f_glCopyTexImage2D glCopyTexImage2D;
+    f_glCopyTexSubImage2D glCopyTexSubImage2D;
     f_glCreateProgram glCreateProgram;
     f_glCreateShader glCreateShader;
+    f_glCullFace glCullFace;
     
+    f_glDeleteBuffers glDeleteBuffers;
+    f_glDeleteFramebuffers glDeleteFramebuffers;
+    f_glDeleteProgram glDeleteProgram;
+    f_glDeleteRenderbuffers glDeleteRenderbuffers;
+    f_glDeleteShader glDeleteShader;
+    f_glDeleteTextures glDeleteTextures;
     f_glDepthFunc glDepthFunc;
+    
     f_glDisable glDisable;
     f_glDrawElements glDrawElements;
     
