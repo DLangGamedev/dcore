@@ -91,12 +91,90 @@ __gshared
     f_glGenFramebuffers glGenFramebuffers;
     f_glGenRenderbuffers glGenRenderbuffers;
     f_glGenTextures glGenTextures;
-    
+    f_glGetActiveAttrib glGetActiveAttrib;
+    f_glGetActiveUniform glGetActiveUniform;
+    f_glGetAttachedShaders glGetAttachedShaders;
+    f_glGetAttribLocation glGetAttribLocation;
+    f_glGetBooleanv glGetBooleanv;
+    f_glGetBufferParameteriv glGetBufferParameteriv;
+    f_glGetError glGetError;
+    f_glGetFloatv glGetFloatv;
+    f_glGetFramebufferAttachmentParameteriv glGetFramebufferAttachmentParameteriv;
+    f_glGetIntegerv glGetIntegerv;
+    f_glGetProgramiv glGetProgramiv;
+    f_glGetProgramInfoLog glGetProgramInfoLog;
+    f_glGetRenderbufferParameteriv glGetRenderbufferParameteriv;
+    f_glGetShaderiv glGetShaderiv;
+    f_glGetShaderInfoLog glGetShaderInfoLog;
+    f_glGetShaderPrecisionFormat glGetShaderPrecisionFormat;
+    f_glGetShaderSource glGetShaderSource;
+    f_glGetString glGetString;
+    f_glGetTexParameterfv glGetTexParameterfv;
+    f_glGetTexParameteriv glGetTexParameteriv;
+    f_glGetUniformfv glGetUniformfv;
+    f_glGetUniformiv glGetUniformiv;
     f_glGetUniformLocation glGetUniformLocation;
+    f_glGetVertexAttribfv glGetVertexAttribfv;
+    f_glGetVertexAttribiv glGetVertexAttribiv;
+    f_glGetVertexAttribPointerv glGetVertexAttribPointerv;
     
+    f_glHint glHint;
+    
+    f_glIsBuffer glIsBuffer;
+    f_glIsEnabled glIsEnabled;
+    f_glIsFramebuffer glIsFramebuffer;
+    f_glIsProgram glIsProgram;
+    f_glIsRenderbuffer glIsRenderbuffer;
+    f_glIsShader glIsShader;
+    f_glIsTexture glIsTexture;
+    
+    f_glLineWidth glLineWidth;
     f_glLinkProgram glLinkProgram;
     
+    f_glPixelStorei glPixelStorei;
+    f_glPolygonOffset glPolygonOffset;
+    
+    f_glReadPixels glReadPixels;
+    f_glReleaseShaderCompiler glReleaseShaderCompiler;
+    f_glRenderbufferStorage glRenderbufferStorage;
+    
+    f_glSampleCoverage glSampleCoverage;
+    f_glScissor glScissor;
+    f_glShaderBinary glShaderBinary;
     f_glShaderSource glShaderSource;
+    
+    f_glStencilFunc glStencilFunc;
+    f_glStencilFuncSeparate glStencilFuncSeparate;
+    f_glStencilMask glStencilMask;
+    f_glStencilMaskSeparate glStencilMaskSeparate;
+    f_glStencilOp glStencilOp;
+    f_glStencilOpSeparate glStencilOpSeparate;
+    
+    f_glTexImage2D glTexImage2D;
+    f_glTexParameterf glTexParameterf;
+    f_glTexParameterfv glTexParameterfv;
+    f_glTexParameteri glTexParameteri;
+    f_glTexParameteriv glTexParameteriv;
+    f_glTexSubImage2D glTexSubImage2D;
+    
+    f_glUniform1f glUniform1f;
+    f_glUniform1fv glUniform1fv;
+    f_glUniform1i glUniform1i;
+    f_glUniform1iv glUniform1iv;
+    f_glUniform2f glUniform2f;
+    f_glUniform2fv glUniform2fv;
+    f_glUniform2i glUniform2i;
+    f_glUniform2iv glUniform2iv;
+    f_glUniform3f glUniform3f;
+    f_glUniform3fv glUniform3fv;
+    f_glUniform3i glUniform3i;
+    f_glUniform3iv glUniform3iv;
+    f_glUniform4f glUniform4f;
+    f_glUniform4fv glUniform4fv;
+    f_glUniform4i glUniform4i;
+    f_glUniform4iv glUniform4iv;
+    f_glUniformMatrix2fv glUniformMatrix2fv;
+    f_glUniformMatrix3fv glUniformMatrix3fv;
     
     f_glUniformMatrix4fv glUniformMatrix4fv;
     f_glUseProgram glUseProgram;
