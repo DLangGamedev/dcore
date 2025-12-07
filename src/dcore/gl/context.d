@@ -85,15 +85,13 @@ version(Windows)
         alias f_wglGetLayerPaletteEntries = int function(HDC, int, int, int, COLORREF*);
         alias f_wglGetProcAddress = PROC function(LPCSTR);
         alias f_wglMakeCurrent = BOOL function(HDC, HGLRC);
-        //wglRealizeLayerPalette
-        //wglSetLayerPaletteEntries
-        //wglShareLists
-        //wglSwapLayerBuffers
-        //wglUseFontBitmaps
-        //wglUseFontOutlines
-        
+        alias f_wglRealizeLayerPalette = BOOL function(HDC, int, BOOL);
+        alias f_wglSetLayerPaletteEntries = int function(HDC, int, int, int, const(COLORREF)*);
+        alias f_wglShareLists = BOOL function(HGLRC, HGLRC);
+        alias f_wglSwapLayerBuffers = BOOL function(HDC, UINT);
+        alias f_wglUseFontBitmaps = BOOL function(HDC, DWORD, DWORD, DWORD);
+        alias f_wglUseFontOutlines = BOOL function(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
         alias f_wglCreateContextAttribsARB = HGLRC function(HDC hDC, HGLRC hShareContext, const(int)* attribList);
-
     }
     
     __gshared
@@ -108,7 +106,14 @@ version(Windows)
         f_wglGetLayerPaletteEntries wglGetLayerPaletteEntries;
         f_wglGetProcAddress wglGetProcAddress;
         f_wglMakeCurrent wglMakeCurrent;
-        
+        f_wglRealizeLayerPalette wglRealizeLayerPalette;
+        f_wglSetLayerPaletteEntries wglSetLayerPaletteEntries;
+        f_wglShareLists wglShareLists;
+        f_wglSwapLayerBuffers wglSwapLayerBuffers;
+        f_wglUseFontBitmaps wglUseFontBitmapsA;
+        f_wglUseFontBitmaps wglUseFontBitmapsW;
+        f_wglUseFontOutlines wglUseFontOutlinesA;
+        f_wglUseFontOutlines wglUseFontOutlinesW;
         f_wglCreateContextAttribsARB wglCreateContextAttribsARB;
     }
 }
@@ -144,11 +149,20 @@ private void* loadGLProc(const(char)* name) @nogc nothrow
     }
 }
 
+version(Windows)
+{
+    enum OpenGLLibraryName = "Opengl32.dll";
+}
+else version(Posix)
+{
+    // TODO
+}
+
 void init() @nogc nothrow
 {
     version(Windows)
     {
-        libogl = openLibrary("Opengl32.dll");
+        libogl = openLibrary(OpenGLLibraryName);
         wglCopyContext = cast(f_wglCopyContext)getFunctionPointer(libogl, "wglCopyContext");
         wglCreateContext = cast(f_wglCreateContext)getFunctionPointer(libogl, "wglCreateContext");
         wglCreateLayerContext = cast(f_wglCreateLayerContext)getFunctionPointer(libogl, "wglCreateLayerContext");
@@ -159,6 +173,14 @@ void init() @nogc nothrow
         wglGetLayerPaletteEntries = cast(f_wglGetLayerPaletteEntries)getFunctionPointer(libogl, "wglGetLayerPaletteEntries");
         wglGetProcAddress = cast(f_wglGetProcAddress)getFunctionPointer(libogl, "wglGetProcAddress");
         wglMakeCurrent = cast(f_wglMakeCurrent)getFunctionPointer(libogl, "wglMakeCurrent");
+        wglRealizeLayerPalette = cast(f_wglRealizeLayerPalette)getFunctionPointer(libogl, "wglRealizeLayerPalette");
+        wglSetLayerPaletteEntries = cast(f_wglSetLayerPaletteEntries)getFunctionPointer(libogl, "wglSetLayerPaletteEntries");
+        wglShareLists = cast(f_wglShareLists)getFunctionPointer(libogl, "wglShareLists");
+        wglSwapLayerBuffers = cast(f_wglSwapLayerBuffers)getFunctionPointer(libogl, "wglSwapLayerBuffers");
+        wglUseFontBitmapsA = cast(f_wglUseFontBitmaps)getFunctionPointer(libogl, "wglUseFontBitmapsA");
+        wglUseFontBitmapsW = cast(f_wglUseFontBitmaps)getFunctionPointer(libogl, "wglUseFontBitmapsW");
+        wglUseFontOutlinesA = cast(f_wglUseFontOutlines)getFunctionPointer(libogl, "wglUseFontOutlinesA");
+        wglUseFontOutlinesW = cast(f_wglUseFontOutlines)getFunctionPointer(libogl, "wglUseFontOutlinesW");
     }
     else version(Posix)
     {

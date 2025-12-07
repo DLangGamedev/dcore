@@ -31,5 +31,5 @@ import dcore.gl.signatures;
 
 __gshared
 {
-    // TODO
+    f_glGenVertexArrays glGenVertexArrays;
 }

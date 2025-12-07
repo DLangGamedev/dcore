@@ -70,17 +70,28 @@ __gshared
     f_glDeleteShader glDeleteShader;
     f_glDeleteTextures glDeleteTextures;
     f_glDepthFunc glDepthFunc;
-    
+    f_glDepthMask glDepthMask;
+    f_glDepthRangef glDepthRangef;
+    f_glDetachShader glDetachShader;
     f_glDisable glDisable;
+    f_glDisableVertexAttribArray glDisableVertexAttribArray;
+    f_glDrawArrays glDrawArrays;
     f_glDrawElements glDrawElements;
     
     f_glEnable glEnable;
     f_glEnableVertexAttribArray glEnableVertexAttribArray;
     
+    f_glFinish glFinish;
     f_glFlush glFlush;
-    
+    f_glFramebufferRenderbuffer glFramebufferRenderbuffer;
+    f_glFramebufferTexture2D glFramebufferTexture2D;
+    f_glFrontFace glFrontFace;
     f_glGenBuffers glGenBuffers;
-    f_glGenVertexArrays glGenVertexArrays;
+    f_glGenerateMipmap glGenerateMipmap;
+    f_glGenFramebuffers glGenFramebuffers;
+    f_glGenRenderbuffers glGenRenderbuffers;
+    f_glGenTextures glGenTextures;
+    
     f_glGetUniformLocation glGetUniformLocation;
     
     f_glLinkProgram glLinkProgram;
@@ -89,6 +100,16 @@ __gshared
     
     f_glUniformMatrix4fv glUniformMatrix4fv;
     f_glUseProgram glUseProgram;
+    
+    f_glValidateProgram glValidateProgram;
+    f_glVertexAttrib1f glVertexAttrib1f;
+    f_glVertexAttrib1fv glVertexAttrib1fv;
+    f_glVertexAttrib2f glVertexAttrib2f;
+    f_glVertexAttrib2fv glVertexAttrib2fv;
+    f_glVertexAttrib3f glVertexAttrib3f;
+    f_glVertexAttrib3fv glVertexAttrib3fv;
+    f_glVertexAttrib4f glVertexAttrib4f;
+    f_glVertexAttrib4fv glVertexAttrib4fv;
     
     f_glVertexAttribPointer glVertexAttribPointer;
     f_glViewport glViewport;
