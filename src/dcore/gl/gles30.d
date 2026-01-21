@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2025 Timur Gafarov
+Copyright (c) 2025-2026 Timur Gafarov
 
 Boost Software License - Version 1.0 - August 17th, 2003
 
@@ -31,5 +31,37 @@ import dcore.gl.signatures;
 
 __gshared
 {
+    f_glReadBuffer glReadBuffer;
+    f_glDrawRangeElements glDrawRangeElements;
+    f_glTexImage3D glTexImage3D;
+    f_glTexSubImage3D glTexSubImage3D;
+    f_glCopyTexSubImage3D glCopyTexSubImage3D;
+    f_glCompressedTexImage3D glCompressedTexImage3D;
+    f_glCompressedTexSubImage3D glCompressedTexSubImage3D;
+    f_glGenQueries glGenQueries;
+    f_glDeleteQueries glDeleteQueries;
+    f_glIsQuery glIsQuery;
+    f_glBeginQuery glBeginQuery;
+    f_glEndQuery glEndQuery;
+    f_glGetQueryiv glGetQueryiv;
+    f_glGetQueryObjectuiv glGetQueryObjectuiv;
+    f_glUnmapBuffer glUnmapBuffer;
+    f_glGetBufferPointerv glGetBufferPointerv;
+    f_glDrawBuffers glDrawBuffers;
+    f_glUniformMatrix2x3fv glUniformMatrix2x3fv;
+    f_glUniformMatrix3x2fv glUniformMatrix3x2fv;
+    f_glUniformMatrix2x4fv glUniformMatrix2x4fv;
+    f_glUniformMatrix4x2fv glUniformMatrix4x2fv;
+    f_glUniformMatrix3x4fv glUniformMatrix3x4fv;
+    f_glUniformMatrix4x3fv glUniformMatrix4x3fv;
+    f_glBlitFramebuffer glBlitFramebuffer;
+    f_glRenderbufferStorageMultisample glRenderbufferStorageMultisample;
+    f_glFramebufferTextureLayer glFramebufferTextureLayer;
+    f_glMapBufferRange glMapBufferRange;
+    f_glFlushMappedBufferRange glFlushMappedBufferRange;
+    f_glBindVertexArray glBindVertexArray;
+    f_glDeleteVertexArrays glDeleteVertexArrays;
     f_glGenVertexArrays glGenVertexArrays;
+    
+    // TODO
 }

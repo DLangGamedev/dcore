@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2025 Timur Gafarov
+Copyright (c) 2025-2026 Timur Gafarov
 
 Boost Software License - Version 1.0 - August 17th, 2003
 
@@ -35,13 +35,11 @@ extern(System) @nogc nothrow:
 
 alias f_glActiveTexture = void function(GLenum texture);
 alias f_glAttachShader = void function(GLuint program, GLuint shader);
-
 alias f_glBindAttribLocation = void function(GLuint program, GLuint index, const(GLchar)* name);
 alias f_glBindBuffer = void function(GLenum target, GLuint buffer);
 alias f_glBindFramebuffer = void function(GLenum target, GLuint framebuffer);
 alias f_glBindRenderbuffer = void function(GLenum target, GLuint renderbuffer);
 alias f_glBindTexture = void function(GLenum target, GLuint texture);
-alias f_glBindVertexArray = void function(GLuint array);
 alias f_glBlendColor = void function(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 alias f_glBlendEquation = void function(GLenum mode);
 alias f_glBlendEquationSeparate = void function(GLenum modeRGB, GLenum modeAlpha);
@@ -49,7 +47,6 @@ alias f_glBlendFunc = void function(GLenum sfactor, GLenum dfactor);
 alias f_glBlendFuncSeparate = void function(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
 alias f_glBufferData = void function(GLenum target, GLsizeiptr size, const(void)* data, GLenum usage);
 alias f_glBufferSubData = void function(GLenum target, GLintptr offset, GLsizeiptr size, const(void)* data);
-
 alias f_glCheckFramebufferStatus = GLenum function(GLenum target);
 alias f_glClear = void function(GLenum mask);
 alias f_glClearColor = void function(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
@@ -64,7 +61,6 @@ alias f_glCopyTexSubImage2D = void function(GLenum target, GLint level, GLint xo
 alias f_glCreateProgram = GLuint function();
 alias f_glCreateShader = GLuint function(GLenum type);
 alias f_glCullFace = void function(GLenum mode);
-
 alias f_glDeleteBuffers = void function(GLsizei n, const(GLuint)* buffers);
 alias f_glDeleteFramebuffers = void function(GLsizei n, const(GLuint)* framebuffers);
 alias f_glDeleteProgram = void function(GLuint program);
@@ -79,16 +75,13 @@ alias f_glDisable = void function(GLenum cap);
 alias f_glDisableVertexAttribArray = void function(GLuint index);
 alias f_glDrawArrays = void function(GLenum mode, GLint first, GLsizei count);
 alias f_glDrawElements = void function(GLenum mode, GLsizei count, GLenum type, const(void)* indices);
-
 alias f_glEnable = void function(GLenum cap);
 alias f_glEnableVertexAttribArray = void function(GLuint index);
-
 alias f_glFinish = void function();
 alias f_glFlush = void function();
 alias f_glFramebufferRenderbuffer = void function(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
 alias f_glFramebufferTexture2D = void function(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
 alias f_glFrontFace = void function(GLenum mode);
-
 alias f_glGenBuffers = void function(GLsizei n, GLuint* buffers);
 alias f_glGenerateMipmap = void function(GLenum target);
 alias f_glGenFramebuffers = void function(GLsizei n, GLuint* framebuffers);
@@ -120,9 +113,7 @@ alias f_glGetUniformLocation = GLint function(GLuint program, const(GLchar)* nam
 alias f_glGetVertexAttribfv = void function(GLuint index, GLenum pname, GLfloat* params);
 alias f_glGetVertexAttribiv = void function(GLuint index, GLenum pname, GLint* params);
 alias f_glGetVertexAttribPointerv = void function(GLuint index, GLenum pname, void** pointer);
-
 alias f_glHint = void function(GLenum target, GLenum mode);
-
 alias f_glIsBuffer = GLboolean function(GLuint buffer);
 alias f_glIsEnabled = GLboolean function(GLenum cap);
 alias f_glIsFramebuffer = GLboolean function(GLuint framebuffer);
@@ -130,17 +121,13 @@ alias f_glIsProgram = GLboolean function(GLuint program);
 alias f_glIsRenderbuffer = GLboolean function(GLuint renderbuffer);
 alias f_glIsShader = GLboolean function(GLuint shader);
 alias f_glIsTexture = GLboolean function(GLuint texture);
-
 alias f_glLineWidth = void function(GLfloat width);
 alias f_glLinkProgram = void function(GLuint program);
-
 alias f_glPixelStorei = void function(GLenum pname, GLint param);
 alias f_glPolygonOffset = void function(GLfloat factor, GLfloat units);
-
 alias f_glReadPixels = void function(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void* pixels);
 alias f_glReleaseShaderCompiler = void function();
 alias f_glRenderbufferStorage = void function(GLenum target, GLenum internalformat, GLsizei width, GLsizei height);
-
 alias f_glSampleCoverage = void function(GLfloat value, GLboolean invert);
 alias f_glScissor = void function(GLint x, GLint y, GLsizei width, GLsizei height);
 alias f_glShaderBinary = void function(GLsizei count, const(GLuint)* shaders, GLenum binaryFormat, const(void)* binary, GLsizei length);
@@ -151,14 +138,12 @@ alias f_glStencilMask = void function(GLuint mask);
 alias f_glStencilMaskSeparate = void function(GLenum face, GLuint mask);
 alias f_glStencilOp = void function(GLenum fail, GLenum zfail, GLenum zpass);
 alias f_glStencilOpSeparate = void function(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
-
 alias f_glTexImage2D = void function(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const(void)* pixels);
 alias f_glTexParameterf = void function(GLenum target, GLenum pname, GLfloat param);
 alias f_glTexParameterfv = void function(GLenum target, GLenum pname, const(GLfloat)* params);
 alias f_glTexParameteri = void function(GLenum target, GLenum pname, GLint param);
 alias f_glTexParameteriv = void function(GLenum target, GLenum pname, const(GLint)* params);
 alias f_glTexSubImage2D = void function(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const(void)* pixels);
-
 alias f_glUniform1f = void function(GLint location, GLfloat v0);
 alias f_glUniform1fv = void function(GLint location, GLsizei count, const(GLfloat)* value);
 alias f_glUniform1i = void function(GLint location, GLint v0);
@@ -179,7 +164,6 @@ alias f_glUniformMatrix2fv = void function(GLint location, GLsizei count, GLbool
 alias f_glUniformMatrix3fv = void function(GLint location, GLsizei count, GLboolean transpose, const(GLfloat)* value);
 alias f_glUniformMatrix4fv = void function(GLint location, GLsizei count, GLboolean transpose, const(GLfloat)* value);
 alias f_glUseProgram = void function(GLuint program);
-
 alias f_glValidateProgram = void function(GLuint program);
 alias f_glVertexAttrib1f = void function(GLuint index, GLfloat x);
 alias f_glVertexAttrib1fv = void function(GLuint index, const(GLfloat)* v);
@@ -189,12 +173,115 @@ alias f_glVertexAttrib3f = void function(GLuint index, GLfloat x, GLfloat y, GLf
 alias f_glVertexAttrib3fv = void function(GLuint index, const(GLfloat)* v);
 alias f_glVertexAttrib4f = void function(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 alias f_glVertexAttrib4fv = void function(GLuint index, const(GLfloat)* v);
-
 alias f_glVertexAttribPointer = void function(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const(void)* pointer);
 alias f_glViewport = void function(GLint x, GLint y, GLsizei width, GLsizei height);
 
 // GLES 3.0
 
-// TODO
-
+alias f_glReadBuffer = void function(GLenum src);
+alias f_glDrawRangeElements = void function(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const(void)* indices);
+alias f_glTexImage3D = void function(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const(void)* pixels);
+alias f_glTexSubImage3D = void function(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const(void)* pixels);
+alias f_glCopyTexSubImage3D = void function(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height);
+alias f_glCompressedTexImage3D = void function(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const(void)* data);
+alias f_glCompressedTexSubImage3D = void function(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const(void)* data);
+alias f_glGenQueries = void function(GLsizei n, GLuint* ids);
+alias f_glDeleteQueries = void function(GLsizei n, const(GLuint)* ids);
+alias f_glIsQuery = GLboolean function(GLuint id);
+alias f_glBeginQuery = void function(GLenum target, GLuint id);
+alias f_glEndQuery = void function(GLenum target);
+alias f_glGetQueryiv = void function(GLenum target, GLenum pname, GLint* params);
+alias f_glGetQueryObjectuiv = void function(GLuint id, GLenum pname, GLuint* params);
+alias f_glUnmapBuffer = GLboolean function(GLenum target);
+alias f_glGetBufferPointerv = void function(GLenum target, GLenum pname, void** params);
+alias f_glDrawBuffers = void function(GLsizei n, const(GLenum)* bufs);
+alias f_glUniformMatrix2x3fv = void function(GLint location, GLsizei count, GLboolean transpose, const(GLfloat)* value);
+alias f_glUniformMatrix3x2fv = void function(GLint location, GLsizei count, GLboolean transpose, const(GLfloat)* value);
+alias f_glUniformMatrix2x4fv = void function(GLint location, GLsizei count, GLboolean transpose, const(GLfloat)* value);
+alias f_glUniformMatrix4x2fv = void function(GLint location, GLsizei count, GLboolean transpose, const(GLfloat)* value);
+alias f_glUniformMatrix3x4fv = void function(GLint location, GLsizei count, GLboolean transpose, const(GLfloat)* value);
+alias f_glUniformMatrix4x3fv = void function(GLint location, GLsizei count, GLboolean transpose, const(GLfloat)* value);
+alias f_glBlitFramebuffer = void function(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
+alias f_glRenderbufferStorageMultisample = void function(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+alias f_glFramebufferTextureLayer = void function(GLenum target, GLenum attachment, GLuint texture, GLint level, GLint layer);
+alias f_glMapBufferRange = void function(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
+alias f_glFlushMappedBufferRange = void function(GLenum target, GLintptr offset, GLsizeiptr length);
+alias f_glBindVertexArray = void function(GLuint array);
+alias f_glDeleteVertexArrays = void function(GLsizei n, const(GLuint)* arrays);
 alias f_glGenVertexArrays = void function(GLsizei n, GLuint* arrays);
+
+    /*
+GL_APICALL GLboolean GL_APIENTRY glIsVertexArray (GLuint array);
+GL_APICALL void GL_APIENTRY glGetIntegeri_v (GLenum target, GLuint index, GLint *data);
+GL_APICALL void GL_APIENTRY glBeginTransformFeedback (GLenum primitiveMode);
+GL_APICALL void GL_APIENTRY glEndTransformFeedback (void);
+GL_APICALL void GL_APIENTRY glBindBufferRange (GLenum target, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size);
+GL_APICALL void GL_APIENTRY glBindBufferBase (GLenum target, GLuint index, GLuint buffer);
+GL_APICALL void GL_APIENTRY glTransformFeedbackVaryings (GLuint program, GLsizei count, const GLchar *const*varyings, GLenum bufferMode);
+GL_APICALL void GL_APIENTRY glGetTransformFeedbackVarying (GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLsizei *size, GLenum *type, GLchar *name);
+GL_APICALL void GL_APIENTRY glVertexAttribIPointer (GLuint index, GLint size, GLenum type, GLsizei stride, const void *pointer);
+GL_APICALL void GL_APIENTRY glGetVertexAttribIiv (GLuint index, GLenum pname, GLint *params);
+GL_APICALL void GL_APIENTRY glGetVertexAttribIuiv (GLuint index, GLenum pname, GLuint *params);
+GL_APICALL void GL_APIENTRY glVertexAttribI4i (GLuint index, GLint x, GLint y, GLint z, GLint w);
+GL_APICALL void GL_APIENTRY glVertexAttribI4ui (GLuint index, GLuint x, GLuint y, GLuint z, GLuint w);
+GL_APICALL void GL_APIENTRY glVertexAttribI4iv (GLuint index, const GLint *v);
+GL_APICALL void GL_APIENTRY glVertexAttribI4uiv (GLuint index, const GLuint *v);
+GL_APICALL void GL_APIENTRY glGetUniformuiv (GLuint program, GLint location, GLuint *params);
+GL_APICALL GLint GL_APIENTRY glGetFragDataLocation (GLuint program, const GLchar *name);
+GL_APICALL void GL_APIENTRY glUniform1ui (GLint location, GLuint v0);
+GL_APICALL void GL_APIENTRY glUniform2ui (GLint location, GLuint v0, GLuint v1);
+GL_APICALL void GL_APIENTRY glUniform3ui (GLint location, GLuint v0, GLuint v1, GLuint v2);
+GL_APICALL void GL_APIENTRY glUniform4ui (GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
+GL_APICALL void GL_APIENTRY glUniform1uiv (GLint location, GLsizei count, const GLuint *value);
+GL_APICALL void GL_APIENTRY glUniform2uiv (GLint location, GLsizei count, const GLuint *value);
+GL_APICALL void GL_APIENTRY glUniform3uiv (GLint location, GLsizei count, const GLuint *value);
+GL_APICALL void GL_APIENTRY glUniform4uiv (GLint location, GLsizei count, const GLuint *value);
+GL_APICALL void GL_APIENTRY glClearBufferiv (GLenum buffer, GLint drawbuffer, const GLint *value);
+GL_APICALL void GL_APIENTRY glClearBufferuiv (GLenum buffer, GLint drawbuffer, const GLuint *value);
+GL_APICALL void GL_APIENTRY glClearBufferfv (GLenum buffer, GLint drawbuffer, const GLfloat *value);
+GL_APICALL void GL_APIENTRY glClearBufferfi (GLenum buffer, GLint drawbuffer, GLfloat depth, GLint stencil);
+GL_APICALL const GLubyte *GL_APIENTRY glGetStringi (GLenum name, GLuint index);
+GL_APICALL void GL_APIENTRY glCopyBufferSubData (GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size);
+GL_APICALL void GL_APIENTRY glGetUniformIndices (GLuint program, GLsizei uniformCount, const GLchar *const*uniformNames, GLuint *uniformIndices);
+GL_APICALL void GL_APIENTRY glGetActiveUniformsiv (GLuint program, GLsizei uniformCount, const GLuint *uniformIndices, GLenum pname, GLint *params);
+GL_APICALL GLuint GL_APIENTRY glGetUniformBlockIndex (GLuint program, const GLchar *uniformBlockName);
+GL_APICALL void GL_APIENTRY glGetActiveUniformBlockiv (GLuint program, GLuint uniformBlockIndex, GLenum pname, GLint *params);
+GL_APICALL void GL_APIENTRY glGetActiveUniformBlockName (GLuint program, GLuint uniformBlockIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformBlockName);
+GL_APICALL void GL_APIENTRY glUniformBlockBinding (GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding);
+GL_APICALL void GL_APIENTRY glDrawArraysInstanced (GLenum mode, GLint first, GLsizei count, GLsizei instancecount);
+GL_APICALL void GL_APIENTRY glDrawElementsInstanced (GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount);
+GL_APICALL GLsync GL_APIENTRY glFenceSync (GLenum condition, GLbitfield flags);
+GL_APICALL GLboolean GL_APIENTRY glIsSync (GLsync sync);
+GL_APICALL void GL_APIENTRY glDeleteSync (GLsync sync);
+GL_APICALL GLenum GL_APIENTRY glClientWaitSync (GLsync sync, GLbitfield flags, GLuint64 timeout);
+GL_APICALL void GL_APIENTRY glWaitSync (GLsync sync, GLbitfield flags, GLuint64 timeout);
+GL_APICALL void GL_APIENTRY glGetInteger64v (GLenum pname, GLint64 *data);
+GL_APICALL void GL_APIENTRY glGetSynciv (GLsync sync, GLenum pname, GLsizei count, GLsizei *length, GLint *values);
+GL_APICALL void GL_APIENTRY glGetInteger64i_v (GLenum target, GLuint index, GLint64 *data);
+GL_APICALL void GL_APIENTRY glGetBufferParameteri64v (GLenum target, GLenum pname, GLint64 *params);
+GL_APICALL void GL_APIENTRY glGenSamplers (GLsizei count, GLuint *samplers);
+GL_APICALL void GL_APIENTRY glDeleteSamplers (GLsizei count, const GLuint *samplers);
+GL_APICALL GLboolean GL_APIENTRY glIsSampler (GLuint sampler);
+GL_APICALL void GL_APIENTRY glBindSampler (GLuint unit, GLuint sampler);
+GL_APICALL void GL_APIENTRY glSamplerParameteri (GLuint sampler, GLenum pname, GLint param);
+GL_APICALL void GL_APIENTRY glSamplerParameteriv (GLuint sampler, GLenum pname, const GLint *param);
+GL_APICALL void GL_APIENTRY glSamplerParameterf (GLuint sampler, GLenum pname, GLfloat param);
+GL_APICALL void GL_APIENTRY glSamplerParameterfv (GLuint sampler, GLenum pname, const GLfloat *param);
+GL_APICALL void GL_APIENTRY glGetSamplerParameteriv (GLuint sampler, GLenum pname, GLint *params);
+GL_APICALL void GL_APIENTRY glGetSamplerParameterfv (GLuint sampler, GLenum pname, GLfloat *params);
+GL_APICALL void GL_APIENTRY glVertexAttribDivisor (GLuint index, GLuint divisor);
+GL_APICALL void GL_APIENTRY glBindTransformFeedback (GLenum target, GLuint id);
+GL_APICALL void GL_APIENTRY glDeleteTransformFeedbacks (GLsizei n, const GLuint *ids);
+GL_APICALL void GL_APIENTRY glGenTransformFeedbacks (GLsizei n, GLuint *ids);
+GL_APICALL GLboolean GL_APIENTRY glIsTransformFeedback (GLuint id);
+GL_APICALL void GL_APIENTRY glPauseTransformFeedback (void);
+GL_APICALL void GL_APIENTRY glResumeTransformFeedback (void);
+GL_APICALL void GL_APIENTRY glGetProgramBinary (GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, void *binary);
+GL_APICALL void GL_APIENTRY glProgramBinary (GLuint program, GLenum binaryFormat, const void *binary, GLsizei length);
+GL_APICALL void GL_APIENTRY glProgramParameteri (GLuint program, GLenum pname, GLint value);
+GL_APICALL void GL_APIENTRY glInvalidateFramebuffer (GLenum target, GLsizei numAttachments, const GLenum *attachments);
+GL_APICALL void GL_APIENTRY glInvalidateSubFramebuffer (GLenum target, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height);
+GL_APICALL void GL_APIENTRY glTexStorage2D (GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height);
+GL_APICALL void GL_APIENTRY glTexStorage3D (GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth);
+GL_APICALL void GL_APIENTRY glGetInternalformativ (GLenum target, GLenum internalformat, GLenum pname, GLsizei count, GLint *params);
+    */

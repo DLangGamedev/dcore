@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2025 Timur Gafarov
+Copyright (c) 2025-2026 Timur Gafarov
 
 Boost Software License - Version 1.0 - August 17th, 2003
 
@@ -33,13 +33,11 @@ __gshared
 {
     f_glActiveTexture glActiveTexture;
     f_glAttachShader glAttachShader;
-    
     f_glBindAttribLocation glBindAttribLocation;
     f_glBindBuffer glBindBuffer;
     f_glBindFramebuffer glBindFramebuffer;
     f_glBindRenderbuffer glBindRenderbuffer;
     f_glBindTexture glBindTexture;
-    f_glBindVertexArray glBindVertexArray;
     f_glBlendColor glBlendColor;
     f_glBlendEquation glBlendEquation;
     f_glBlendEquationSeparate glBlendEquationSeparate;
@@ -47,7 +45,6 @@ __gshared
     f_glBlendFuncSeparate glBlendFuncSeparate;
     f_glBufferData glBufferData;
     f_glBufferSubData glBufferSubData;
-    
     f_glCheckFramebufferStatus glCheckFramebufferStatus;
     f_glClear glClear;
     f_glClearColor glClearColor;
@@ -62,7 +59,6 @@ __gshared
     f_glCreateProgram glCreateProgram;
     f_glCreateShader glCreateShader;
     f_glCullFace glCullFace;
-    
     f_glDeleteBuffers glDeleteBuffers;
     f_glDeleteFramebuffers glDeleteFramebuffers;
     f_glDeleteProgram glDeleteProgram;
@@ -77,10 +73,8 @@ __gshared
     f_glDisableVertexAttribArray glDisableVertexAttribArray;
     f_glDrawArrays glDrawArrays;
     f_glDrawElements glDrawElements;
-    
     f_glEnable glEnable;
     f_glEnableVertexAttribArray glEnableVertexAttribArray;
-    
     f_glFinish glFinish;
     f_glFlush glFlush;
     f_glFramebufferRenderbuffer glFramebufferRenderbuffer;
@@ -117,9 +111,7 @@ __gshared
     f_glGetVertexAttribfv glGetVertexAttribfv;
     f_glGetVertexAttribiv glGetVertexAttribiv;
     f_glGetVertexAttribPointerv glGetVertexAttribPointerv;
-    
     f_glHint glHint;
-    
     f_glIsBuffer glIsBuffer;
     f_glIsEnabled glIsEnabled;
     f_glIsFramebuffer glIsFramebuffer;
@@ -127,36 +119,29 @@ __gshared
     f_glIsRenderbuffer glIsRenderbuffer;
     f_glIsShader glIsShader;
     f_glIsTexture glIsTexture;
-    
     f_glLineWidth glLineWidth;
     f_glLinkProgram glLinkProgram;
-    
     f_glPixelStorei glPixelStorei;
     f_glPolygonOffset glPolygonOffset;
-    
     f_glReadPixels glReadPixels;
     f_glReleaseShaderCompiler glReleaseShaderCompiler;
     f_glRenderbufferStorage glRenderbufferStorage;
-    
     f_glSampleCoverage glSampleCoverage;
     f_glScissor glScissor;
     f_glShaderBinary glShaderBinary;
     f_glShaderSource glShaderSource;
-    
     f_glStencilFunc glStencilFunc;
     f_glStencilFuncSeparate glStencilFuncSeparate;
     f_glStencilMask glStencilMask;
     f_glStencilMaskSeparate glStencilMaskSeparate;
     f_glStencilOp glStencilOp;
     f_glStencilOpSeparate glStencilOpSeparate;
-    
     f_glTexImage2D glTexImage2D;
     f_glTexParameterf glTexParameterf;
     f_glTexParameterfv glTexParameterfv;
     f_glTexParameteri glTexParameteri;
     f_glTexParameteriv glTexParameteriv;
     f_glTexSubImage2D glTexSubImage2D;
-    
     f_glUniform1f glUniform1f;
     f_glUniform1fv glUniform1fv;
     f_glUniform1i glUniform1i;
@@ -175,10 +160,8 @@ __gshared
     f_glUniform4iv glUniform4iv;
     f_glUniformMatrix2fv glUniformMatrix2fv;
     f_glUniformMatrix3fv glUniformMatrix3fv;
-    
     f_glUniformMatrix4fv glUniformMatrix4fv;
     f_glUseProgram glUseProgram;
-    
     f_glValidateProgram glValidateProgram;
     f_glVertexAttrib1f glVertexAttrib1f;
     f_glVertexAttrib1fv glVertexAttrib1fv;
@@ -188,7 +171,6 @@ __gshared
     f_glVertexAttrib3fv glVertexAttrib3fv;
     f_glVertexAttrib4f glVertexAttrib4f;
     f_glVertexAttrib4fv glVertexAttrib4fv;
-    
     f_glVertexAttribPointer glVertexAttribPointer;
     f_glViewport glViewport;
 }
