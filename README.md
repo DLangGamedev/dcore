@@ -26,4 +26,4 @@ Progress
 
 License
 -------
-Copyright (c) 2019-2025 Timur Gafarov. Distributed under the Boost Software License, Version 1.0 (see accompanying file COPYING or at https://www.boost.org/LICENSE_1_0.txt).
+Copyright (c) 2019-2026 Timur Gafarov. Distributed under the Boost Software License, Version 1.0 (see accompanying file COPYING or at https://www.boost.org/LICENSE_1_0.txt).

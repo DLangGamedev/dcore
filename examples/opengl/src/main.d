@@ -83,7 +83,8 @@ class DCoreApplication
     void main(void)
     {
         frag_color = vec4(color, 1.0);
-    }";
+    }
+    ";
     
     uint shaderProgram;
 
@@ -403,9 +404,6 @@ void main()
 {
     dcore.init();
     testSysInfo();
-    //testProcess();
-    //testTime();
-    //testRandom();
     
     DCoreApplication app = new DCoreApplication();
     app.run();
