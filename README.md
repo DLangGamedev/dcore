@@ -21,7 +21,7 @@ Progress
 * [x] `dcore.mutex` - cross-platform thread synchronization primitive
 * [x] `dcore.linker` - cross-platform dynamic library loader
 * [ ] `dcore.text` - string processing, UTF-8 decoder
-* [ ] `dcore.gl` - cross-platform OpenGL/OpenGL ES binding
+* [x] `dcore.gl` - cross-platform OpenGL ES binding
 * [ ] `dcore.windows` - helper functions under Windows.
 
 License
